@@ -964,20 +964,9 @@ if (window.$) {
 
     const normalize = value => String(value ?? '')
       .normalize('NFKC')
-      .replace(/\s+/g, ' ')
+      .replace(/\\s+/g, ' ')
       .trim()
       .toLocaleLowerCase('cs');
-
-    const getSignature = () => {
-      const title = document.getElementById('question-title')?.innerText || '';
-      const options = [...document.querySelectorAll('#options > .option')]
-        .map(option => option.querySelector('.text')?.innerText || '');
-      if (options.length !== 4) return '';
-      return JSON.stringify([
-        normalize(title),
-        options.map(normalize).sort()
-      ]);
-    };
 
     const prompt = titleElement.innerText || '';
     const actual = optionElements.map(option =>
@@ -985,50 +974,95 @@ if (window.$) {
     );
     if (!normalize(prompt) || actual.some(value => !normalize(value))) return;
 
-    const signature = getSignature();
-    if (!signature || signature === window.otazkyLastSignature) return;
+    const signature = JSON.stringify([
+      normalize(prompt),
+      actual.map(normalize).sort()
+    ]);
+    if (signature === window.otazkyLastSignature) return;
 
     window.otazkyBusy = true;
     try {
+      // The endpoint returns a randomized batch on each request. Keep all
+      // records collected so far and request more batches when this question
+      // is not present in the current response.
+      const records = window.otazkyQuestionRecords || [];
+      const knownRecords = new Set(records.map(record => [
+        record.type,
+        record.question?.problem,
+        record.question?.id,
+        record.question?.term,
+        record.question?.description
+      ].join('|')));
+
+      const addRecords = data => {
+        for (const record of data?.questions || []) {
+          const question = record?.question;
+          if (!question) continue;
+          const key = [
+            record.type,
+            question.problem,
+            question.id,
+            question.term,
+            question.description
+          ].join('|');
+          if (!knownRecords.has(key)) {
+            knownRecords.add(key);
+            records.push(record);
+          }
+        }
+        window.otazkyQuestionRecords = records;
+      };
+
+      const findMatches = () => {
+        const actualSorted = actual.map(normalize).sort();
+        const matches = [];
+
+        for (const record of records) {
+          const question = record?.question;
+          const distractors = record?.distractors;
+          if (!question || !Array.isArray(distractors)) continue;
+
+          let promptText;
+          let correctText;
+          let expected;
+
+          if (record.type === 'chooseTerm') {
+            promptText = question.description;
+            correctText = question.term;
+            expected = [question.term, ...distractors.map(item => item.term)];
+          } else if (record.type === 'chooseCategory') {
+            promptText = question.term;
+            correctText = question.description;
+            expected = [question.description, ...distractors.map(item => item.description)];
+          } else {
+            continue;
+          }
+
+          if (normalize(promptText) !== normalize(prompt) ||
+              !correctText || expected.length !== actual.length ||
+              expected.some(value => !normalize(value))) continue;
+
+          const expectedSorted = expected.map(normalize).sort();
+          if (expectedSorted.every((value, index) => value === actualSorted[index])) {
+            matches.push(correctText);
+          }
+        }
+        return matches;
+      };
+
       if (!window.otazkyDataPromise) {
         window.otazkyDataPromise =
           window.fjWEDGjivdsXloadQuestionData('mcqLoadQuestionsDynamicCategoryData.php');
       }
+      addRecords(await window.otazkyDataPromise);
 
-      const data = await window.otazkyDataPromise;
-      const records = Array.isArray(data.questions) ? data.questions : [];
-      const actualSorted = actual.map(normalize).sort();
-      const matches = [];
-
-      for (const record of records) {
-        const question = record && record.question;
-        const distractors = record && record.distractors;
-        if (!question || !Array.isArray(distractors)) continue;
-
-        let expected;
-        let promptText;
-        let correctText;
-
-        if (record.type === 'chooseTerm') {
-          promptText = question.description;
-          correctText = question.term;
-          expected = [question.term, ...distractors.map(item => item.term)];
-        } else if (record.type === 'chooseCategory') {
-          promptText = question.term;
-          correctText = question.description;
-          expected = [question.description, ...distractors.map(item => item.description)];
-        } else {
-          continue;
-        }
-
-        if (!normalize(promptText) || normalize(promptText) !== normalize(prompt)) continue;
-        if (!correctText || expected.length !== actual.length ||
-            expected.some(value => !normalize(value))) continue;
-
-        const expectedSorted = expected.map(normalize).sort();
-        if (expectedSorted.every((value, index) => value === actualSorted[index])) {
-          matches.push(correctText);
-        }
+      let matches = findMatches();
+      for (let attempt = 0; matches.length === 0 && attempt < 6; attempt++) {
+        const data = await window.fjWEDGjivdsXloadQuestionData(
+          'mcqLoadQuestionsDynamicCategoryData.php'
+        );
+        addRecords(data);
+        matches = findMatches();
       }
 
       const uniqueAnswers = [...new Set(matches.map(normalize))];
@@ -1036,7 +1070,7 @@ if (window.$) {
         console.warn(
           '[umimeto-solver] Otázky: expected one unambiguous API match, found:',
           matches.length,
-          { prompt, actual, matches }
+          { prompt, actual, cachedRecords: records.length, matches }
         );
         return;
       }
@@ -1051,15 +1085,18 @@ if (window.$) {
       const answerElement = optionElements[correctIndex];
       window.otazkyLastSignature = signature;
       console.log('[umimeto-solver] Otázky — correct answer:', correctText);
-
-      // The current Otázky UI uses .option cards, not the legacy
-      // variantjedna/variantdva elements handled by clickVariant().
       answerElement.click();
 
       // Some versions advance as soon as an option is clicked; only call
       // nextQuestion if the same question is still on screen.
       setTimeout(() => {
-        if (getSignature() === signature && typeof nextQuestion === 'function') {
+        const currentTitle = document.getElementById('question-title')?.innerText || '';
+        const currentOptions = [...document.querySelectorAll('#options > .option .text')]
+          .map(element => normalize(element.innerText || ''));
+        const currentSignature = currentOptions.length === 4
+          ? JSON.stringify([normalize(currentTitle), currentOptions.sort()])
+          : '';
+        if (currentSignature === signature && typeof nextQuestion === 'function') {
           nextQuestion();
         }
       }, 150);
