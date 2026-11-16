@@ -1053,6 +1053,34 @@ if (window.$) {
     }
   }
 
+
+  function answer_krizovky () {
+    if (window.krizovkyBusy || finished == 1) return;
+    if (!Array.isArray(window.currentQuestions) || !window.currentQuestions.length ||
+        typeof window.showInput !== 'function' || typeof window.insertLetter !== 'function') return;
+
+    window.krizovkyBusy = true;
+    try {
+      for (const question of window.currentQuestions) {
+        if (!question || typeof question.answer !== 'string' ||
+            !Number.isInteger(question.x) || !Number.isInteger(question.y)) {
+          console.warn('[umimeto-solver] Invalid crossword question:', question);
+          return;
+        }
+
+        showInput(question.x, question.y);
+        for (const letter of Array.from(question.answer)) {
+          insertLetter(letter);
+        }
+      }
+      console.log('[umimeto-solver] Crossword answers entered.');
+    } catch (error) {
+      console.error('[umimeto-solver] Křížovka:', error);
+    } finally {
+      window.krizovkyBusy = false;
+    }
+  }
+
   function answer_roboti () {
     let correct_answer = -1;
     try {
@@ -1313,6 +1341,12 @@ if (window.$) {
       // loop
       window.sstop_timer.start(function () {
         answer_otazky();
+      }, 1500);
+    } else if (window.location.href.includes('/krizovky')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_krizovky();
+      window.sstop_timer.start(function () {
+        answer_krizovky();
       }, 1500);
     } else if (window.location.href.includes('/rozrazovacka')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
