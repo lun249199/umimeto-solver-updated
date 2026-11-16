@@ -1,5 +1,7 @@
 # Umíme.to Solver (updated fork)
 
+[🇨🇿 Česká verze README](README.cs.md)
+
 A browser-side JavaScript helper for selected exercises on [Umíme.to](https://www.umimecesky.cz/).
 
 This is an updated fork of [MP3Martin/umimeto-solver](https://github.com/MP3Martin/umimeto-solver). The original project is archived, so this fork contains compatibility fixes for the current Umíme.to website.
