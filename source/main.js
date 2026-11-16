@@ -770,7 +770,7 @@ if (window.$) {
     if (!questionElement || !cards.length) return;
 
     const normalize = value => value
-      .replace(/[^\\p{L}\\p{N}]/gu, '')
+      .replace(/[^\p{L}\p{N}]/gu, '')
       .toLowerCase();
 
     const visible = normalize(questionElement.innerText || '');
