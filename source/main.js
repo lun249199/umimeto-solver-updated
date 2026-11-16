@@ -67,7 +67,9 @@ if (window.$) {
     execute: function (e) {
       if (!e.running) return false;
       e.cb();
-      e.start();
+      if (e.running) {
+        e.start();
+      }
     },
     stop: function () {
       this.running = false;
@@ -906,40 +908,86 @@ if (window.$) {
     } catch (error) {}
   }
 
-  function answer_rozrazovacka () {
-    const correct_answer = '';
-    let box = -1;
+  async function answer_rozrazovacka () {
+    if (window.rozrazovackaBusy) return;
+    window.rozrazovackaBusy = true;
+
     try {
-      for (i of range(document.getElementById('pool').childNodes.length)) {
-        const el = document.getElementById('word' + i);
-        wordClicked($(el));
-        if (el.attributes.correctvariant.value === '0') {
-          box = 0;
-        } else if (el.attributes.correctvariant.value === '1') {
-          box = 1;
-        } else {
-          sstop_alert('This type of "rozřazovačka" is saddly not supported!');
-          window.sstop_btn();
-          break;
-        }
-        for (e of range(document.getElementById('set' + box).childNodes.length)) {
-          if (e % 2 == 0) {
-            if (document.getElementById('set' + box).childNodes[e].attributes.currentword.value === '-1') {
-              // console.log("box: " + box + ", set: " + e)
-              if (el.attributes.currentbox.value === '-1') {
-                wordBoxClicked($(document.getElementById('wordBox-' + box + '-' + parseInt(e / 2))));
-                break;
-              }
+      const words = [...document.querySelectorAll('.word')];
+      if (!words.length) return;
+
+      const wanted = words.map(el => el.innerText.trim());
+      const answers = {};
+
+      // Question data is returned in batches, so collect up to five.
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const data = await window.fjWEDGjivdsXloadQuestionData(
+          'rozrazovackaLoadDynamicCategoryData.php'
+        );
+
+        for (const item of data.items || []) {
+          for (const pair of item.pairs || []) {
+            const word = pair.card && pair.card[1];
+            const category = pair.vzor && pair.vzor[1];
+
+            if (wanted.includes(word) && category) {
+              answers[word] = category;
             }
           }
         }
+
+        if (wanted.every(word => answers[word])) break;
       }
 
-      setTimeout(() => {
-        evaluate();
-        nextSet();
-      }, window.sstop_timer.iv / 5);
-    } catch (error) {}
+      // Put each word into an empty slot with the matching category.
+      for (const word of words) {
+        const wordText = word.innerText.trim();
+        const category = answers[wordText];
+
+        if (!category) {
+          console.warn('[umimeto-solver] No answer found:', wordText);
+          continue;
+        }
+
+        if (word.getAttribute('currentbox') !== '-1') continue;
+
+        const box = [...document.querySelectorAll('.wordBox')]
+          .find(el =>
+            el.getAttribute('vzor') === category &&
+            el.getAttribute('currentword') === '-1'
+          );
+
+        if (!box) {
+          console.warn('[umimeto-solver] No empty slot for:', wordText, category);
+          continue;
+        }
+
+        const drop = jQuery(box).droppable('option', 'drop');
+        if (typeof drop !== 'function') {
+          console.warn('[umimeto-solver] Drop handler unavailable for:', wordText);
+          continue;
+        }
+
+        drop.call(box, {}, { draggable: jQuery(word) });
+        console.log('[umimeto-solver] Placed:', wordText, '→', category);
+      }
+
+      const allPlaced = words.every(
+        word => word.getAttribute('currentbox') !== '-1'
+      );
+
+      if (allPlaced) {
+        console.log('[umimeto-solver] All words placed. Checking answers...');
+        window.sstop_timer.stop();
+        document.getElementById('evaluate')?.click();
+      } else {
+        console.warn('[umimeto-solver] Not all words could be placed; not submitting.');
+      }
+    } catch (error) {
+      console.error('[umimeto-solver] Rozřazovačka:', error);
+    } finally {
+      window.rozrazovackaBusy = false;
+    }
   }
 
   function answer_roboti () {
@@ -1108,12 +1156,19 @@ if (window.$) {
       finished = true;
       preloadImages(items);
     }
-    try {
-      loadItems().then(() => {
-        window.questions = items;
-      });
-    } catch (e) {
-      console.log('New update fix not working :(');
+    // Some current exercise types do not define the legacy question-loader globals.
+    // Keep the legacy loader for exercises that still provide them, and catch async errors.
+    if (typeof kc !== 'undefined' &&
+        typeof chosenProblem !== 'undefined' &&
+        typeof cookieHash !== 'undefined' &&
+        typeof apiUrl !== 'undefined') {
+      loadItems()
+        .then(() => {
+          window.questions = items;
+        })
+        .catch(e => {
+          console.warn('[umimeto-solver] Legacy question loader unavailable:', e);
+        });
     }
     if (ulr_ex_type.includes('doplnovacka') || ulr_ex_type.includes('rozhodovacka')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
