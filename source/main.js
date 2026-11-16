@@ -955,20 +955,122 @@ if (window.$) {
     } catch (error) {}
   }
 
-  function answer_otazky () {
-    let correct_answer = '';
+  async function answer_otazky () {
+    if (window.otazkyBusy) return;
+
+    const titleElement = document.getElementById('question-title');
+    const optionElements = [...document.querySelectorAll('#options > .option')];
+    if (!titleElement || optionElements.length !== 4) return;
+
+    const normalize = value => String(value ?? '')
+      .normalize('NFKC')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLocaleLowerCase('cs');
+
+    const getSignature = () => {
+      const title = document.getElementById('question-title')?.innerText || '';
+      const options = [...document.querySelectorAll('#options > .option')]
+        .map(option => option.querySelector('.text')?.innerText || '');
+      if (options.length !== 4) return '';
+      return JSON.stringify([
+        normalize(title),
+        options.map(normalize).sort()
+      ]);
+    };
+
+    const prompt = titleElement.innerText || '';
+    const actual = optionElements.map(option =>
+      option.querySelector('.text')?.innerText || ''
+    );
+    if (!normalize(prompt) || actual.some(value => !normalize(value))) return;
+
+    const signature = getSignature();
+    if (!signature || signature === window.otazkyLastSignature) return;
+
+    window.otazkyBusy = true;
     try {
-      const variants = ['variantjedna', 'variantdva', 'varianttri', 'variantctyri'];
-      for (i of variants) {
-        if (document.getElementById(i).attributes.correct.value === '1') {
-          correct_answer = i;
-          break;
+      if (!window.otazkyDataPromise) {
+        window.otazkyDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('mcqLoadQuestionsDynamicCategoryData.php');
+      }
+
+      const data = await window.otazkyDataPromise;
+      const records = Array.isArray(data.questions) ? data.questions : [];
+      const actualSorted = actual.map(normalize).sort();
+      const matches = [];
+
+      for (const record of records) {
+        const question = record && record.question;
+        const distractors = record && record.distractors;
+        if (!question || !Array.isArray(distractors)) continue;
+
+        let expected;
+        let promptText;
+        let correctText;
+
+        if (record.type === 'chooseTerm') {
+          promptText = question.description;
+          correctText = question.term;
+          expected = [question.term, ...distractors.map(item => item.term)];
+        } else if (record.type === 'chooseCategory') {
+          promptText = question.term;
+          correctText = question.description;
+          expected = [question.description, ...distractors.map(item => item.description)];
+        } else {
+          continue;
+        }
+
+        if (!normalize(promptText) || normalize(promptText) !== normalize(prompt)) continue;
+        if (!correctText || expected.length !== actual.length ||
+            expected.some(value => !normalize(value))) continue;
+
+        const expectedSorted = expected.map(normalize).sort();
+        if (expectedSorted.every((value, index) => value === actualSorted[index])) {
+          matches.push(correctText);
         }
       }
-      console.log('Correct answer: ' + document.getElementById(i).innerText);
-      clickVariant($(document.getElementById(i)));
-      nextQuestion();
-    } catch (error) {}
+
+      const uniqueAnswers = [...new Set(matches.map(normalize))];
+      if (uniqueAnswers.length !== 1) {
+        console.warn(
+          '[umimeto-solver] Otázky: expected one unambiguous API match, found:',
+          matches.length,
+          { prompt, actual, matches }
+        );
+        return;
+      }
+
+      const correctText = matches.find(value => normalize(value) === uniqueAnswers[0]);
+      const correctIndex = actual.findIndex(value => normalize(value) === uniqueAnswers[0]);
+      if (correctIndex < 0) {
+        console.warn('[umimeto-solver] Otázky: correct option is not visible:', correctText);
+        return;
+      }
+
+      const answerElement = optionElements[correctIndex];
+      window.otazkyLastSignature = signature;
+      console.log('[umimeto-solver] Otázky — correct answer:', correctText);
+
+      if (typeof clickVariant === 'function') {
+        clickVariant($(answerElement));
+      } else {
+        answerElement.click();
+      }
+
+      // Some versions advance as soon as an option is clicked; only call
+      // nextQuestion if the same question is still on screen.
+      setTimeout(() => {
+        if (getSignature() === signature && typeof nextQuestion === 'function') {
+          nextQuestion();
+        }
+      }, 150);
+    } catch (error) {
+      console.error('[umimeto-solver] Otázky:', error);
+      window.otazkyDataPromise = null;
+    } finally {
+      window.otazkyBusy = false;
+    }
   }
 
   async function answer_rozrazovacka () {
