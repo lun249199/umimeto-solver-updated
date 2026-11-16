@@ -1061,17 +1061,24 @@ if (window.$) {
 
     window.krizovkyBusy = true;
     try {
-      for (const question of window.currentQuestions) {
+      for (let index = 0; index < window.currentQuestions.length; index++) {
+        const question = window.currentQuestions[index];
         if (!question || typeof question.answer !== 'string' ||
             !Number.isInteger(question.x) || !Number.isInteger(question.y)) {
           console.warn('[umimeto-solver] Invalid crossword question:', question);
           return;
         }
 
+        // insertLetter() reads currentQuestion to determine the direction and word length.
+        window.currentQuestion = question;
+        window.currentQuestionOffset = index;
         showInput(question.x, question.y);
+
         for (const letter of Array.from(question.answer)) {
+          if (finished == 1) break;
           insertLetter(letter);
         }
+        if (finished == 1) break;
       }
       console.log('[umimeto-solver] Crossword answers entered.');
     } catch (error) {
