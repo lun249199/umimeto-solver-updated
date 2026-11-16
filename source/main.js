@@ -979,6 +979,8 @@ if (window.$) {
       actual.map(normalize).sort()
     ]);
     if (signature === window.otazkyLastSignature) return;
+    window.otazkyCheckedSignatures = window.otazkyCheckedSignatures || new Set();
+    if (window.otazkyCheckedSignatures.has(signature)) return;
 
     window.otazkyBusy = true;
     try {
@@ -1063,6 +1065,11 @@ if (window.$) {
         );
         addRecords(data);
         matches = findMatches();
+      }
+
+      if (matches.length === 0) {
+        // Do not repeat the same six API requests on every 1.5-second poll.
+        window.otazkyCheckedSignatures.add(signature);
       }
 
       const uniqueAnswers = [...new Set(matches.map(normalize))];
