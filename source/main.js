@@ -917,7 +917,7 @@ if (window.$) {
       if (!words.length) return;
 
       const wanted = words.map(el => el.innerText.trim());
-      const answers = {};
+      const answerMap = {};
 
       // Question data is returned in batches, so collect up to five.
       for (let attempt = 0; attempt < 5; attempt++) {
@@ -931,12 +931,12 @@ if (window.$) {
             const category = pair.vzor && pair.vzor[1];
 
             if (wanted.includes(word) && category) {
-              answers[word] = category;
+              answerMap[word] = category;
             }
           }
         }
 
-        if (wanted.every(word => answers[word])) break;
+        if (wanted.every(word => answerMap[word])) break;
       }
 
       // Put each word into an empty slot with the matching category.
@@ -962,13 +962,13 @@ if (window.$) {
           continue;
         }
 
-        const drop = jQuery(box).droppable('option', 'drop');
-        if (typeof drop !== 'function') {
+        const dropHandler = jQuery(box).droppable('option', 'drop');
+        if (typeof dropHandler !== 'function') {
           console.warn('[umimeto-solver] Drop handler unavailable for:', wordText);
           continue;
         }
 
-        drop.call(box, {}, { draggable: jQuery(word) });
+        dropHandler.call(box, {}, { draggable: jQuery(word) });
         console.log('[umimeto-solver] Placed:', wordText, '→', category);
       }
 
