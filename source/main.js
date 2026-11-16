@@ -1052,11 +1052,9 @@ if (window.$) {
       window.otazkyLastSignature = signature;
       console.log('[umimeto-solver] Otázky — correct answer:', correctText);
 
-      if (typeof clickVariant === 'function') {
-        clickVariant($(answerElement));
-      } else {
-        answerElement.click();
-      }
+      // The current Otázky UI uses .option cards, not the legacy
+      // variantjedna/variantdva elements handled by clickVariant().
+      answerElement.click();
 
       // Some versions advance as soon as an option is clicked; only call
       // nextQuestion if the same question is still on screen.
