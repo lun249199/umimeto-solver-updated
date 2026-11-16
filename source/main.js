@@ -775,7 +775,7 @@ if (window.$) {
 
     const visible = normalize(questionElement.innerText || '');
     const signature = visible + '|' + cards.map(card => normalize(card.innerText)).join('|');
-    if (!visible || signature === window.doplnovackaLastSignature) return;
+    if (!visible || (signature === window.doplnovackaLastSignature && cards.some(card => card.classList.contains('correct') || card.classList.contains('wrong')))) return;
 
     window.doplnovackaBusy = true;
     try {
