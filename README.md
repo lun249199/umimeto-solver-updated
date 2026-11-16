@@ -18,7 +18,7 @@ This is an updated fork of [MP3Martin/umimeto-solver](https://github.com/MP3Mart
 ```js
 (function () {
   const script = document.createElement("script");
-  script.src = "https://raw.githubusercontent.com/lun249199/umimeto-solver-updated/main/source/main.min.js";
+  script.src = "https://cdn.jsdelivr.net/gh/lun249199/umimeto-solver-updated@main/source/main.min.js";
   script.onload = () => console.log("[umimeto-solver] Loaded");
   script.onerror = () => console.error("[umimeto-solver] Could not load the script");
   document.body.appendChild(script);
@@ -32,7 +32,7 @@ The solver's interface should appear on the page when the script loads.
 Create a new browser bookmark and paste the following into its **URL** field:
 
 ```js
-javascript:(()=>{const s=document.createElement("script");s.src="https://raw.githubusercontent.com/lun249199/umimeto-solver-updated/main/source/main.min.js";s.onload=()=>console.log("[umimeto-solver] Loaded");s.onerror=()=>console.error("[umimeto-solver] Could not load the script");document.body.appendChild(s)})();
+javascript:(()=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/gh/lun249199/umimeto-solver-updated@main/source/main.min.js";s.onload=()=>console.log("[umimeto-solver] Loaded");s.onerror=()=>console.error("[umimeto-solver] Could not load the script");document.body.appendChild(s)})();
 ```
 
 Open an Umíme.to exercise and click the bookmark. Some browsers may require you to enable bookmarklets or use the address bar.
