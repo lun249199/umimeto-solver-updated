@@ -1069,10 +1069,17 @@ if (window.$) {
           return;
         }
 
-        // insertLetter() reads currentQuestion to determine the direction and word length.
-        window.currentQuestion = question;
-        window.currentQuestionOffset = index;
-        showInput(question.x, question.y);
+        // Use the site's own clue selector so all internal crossword state is updated.
+        const cell = window.jQuery(`#square-${question.x}-${question.y}`);
+        if (!cell.length) {
+          console.warn('[umimeto-solver] Crossword starting cell not found:', question);
+          continue;
+        }
+        clickSquareLetter(cell);
+        if (window.currentQuestion !== question) {
+          console.warn('[umimeto-solver] Could not select crossword clue:', question);
+          continue;
+        }
 
         for (const letter of Array.from(question.answer)) {
           if (finished == 1) break;
