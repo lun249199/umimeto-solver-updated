@@ -761,6 +761,69 @@ if (window.$) {
     document.getElementById('sstop_slider').style.width = parseInt((95 / 100) * document.getElementById('sstop_button').offsetWidth) + 'px';
   }
 
+
+  async function answer_doplnovacka () {
+    if (window.doplnovackaBusy) return;
+
+    const questionElement = document.querySelector('.question-content');
+    const cards = [...document.querySelectorAll('.options .card')];
+    if (!questionElement || !cards.length) return;
+
+    const normalize = value => value
+      .replace(/[^\\p{L}\\p{N}]/gu, '')
+      .toLowerCase();
+
+    const visible = normalize(questionElement.innerText || '');
+    const signature = visible + '|' + cards.map(card => normalize(card.innerText)).join('|');
+    if (!visible || signature === window.doplnovackaLastSignature) return;
+
+    window.doplnovackaBusy = true;
+    try {
+      if (!window.doplnovackaDataPromise) {
+        window.doplnovackaDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('doplnovackaLoadQuestionsBinaryChoiceData.php');
+      }
+
+      const data = await window.doplnovackaDataPromise;
+      const extractText = value => {
+        if (Array.isArray(value)) {
+          if (value[0] === 'text' && typeof value[1] === 'string') return value[1];
+          return value.map(extractText).join('');
+        }
+        return typeof value === 'string' ? value : '';
+      };
+
+      const matches = (data.items || []).filter(item =>
+        normalize(extractText(item.question)) === visible
+      );
+
+      if (matches.length !== 1) {
+        console.warn('[umimeto-solver] Expected one question match, found:', matches.length);
+        return;
+      }
+
+      const item = matches[0];
+      const expected = item.options.map(option => normalize(extractText(option.option)));
+      const actual = cards.map(card => normalize(card.innerText));
+      const correctIndex = item.options.findIndex(option => Number(option.correct) === 1);
+
+      if (correctIndex < 0 || expected.length !== actual.length ||
+          expected.some((value, index) => value !== actual[index])) {
+        console.warn('[umimeto-solver] Answer validation failed:', { expected, actual });
+        return;
+      }
+
+      window.doplnovackaLastSignature = signature;
+      console.log('[umimeto-solver] Correct answer:', extractText(item.options[correctIndex].option));
+      cards[correctIndex].click();
+    } catch (error) {
+      console.error('[umimeto-solver] Doplňovačka:', error);
+      window.doplnovackaDataPromise = null;
+    } finally {
+      window.doplnovackaBusy = false;
+    }
+  }
+
   function answer_twoOp () {
     let correct_answer = -1;
     try {
@@ -1173,10 +1236,10 @@ if (window.$) {
     if (ulr_ex_type.includes('doplnovacka') || ulr_ex_type.includes('rozhodovacka')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
       // run for the first time
-      answer_twoOp();
+      answer_doplnovacka();
       // loop
       window.sstop_timer.start(function () {
-        answer_twoOp();
+        answer_doplnovacka();
       }, 1500);
     } else if (window.location.href.includes('?p=zavodyPsani')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
