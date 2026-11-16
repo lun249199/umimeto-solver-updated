@@ -1,80 +1,60 @@
-<!-- ![codefactor_a+](https://user-images.githubusercontent.com/60501493/173180235-809fa83a-5bcf-4707-a079-dde00ca01349.svg) -->
+# Umíme.to Solver (updated fork)
 
-# umimeto-solver
-\- Javascript tool to solve https://umimeto.org for you with a nice GUI. <br>
+A browser-side JavaScript helper for selected exercises on [Umíme.to](https://www.umimecesky.cz/).
 
-[![CodeFactor](https://www.codefactor.io/repository/github/MP3Martin/umimeto-solver/badge)](#/)
-[<img src="https://img.shields.io/github/license/MP3Martin/umimeto-solver">](#/)
-[<img src="https://img.shields.io/github/stars/MP3Martin/umimeto-solver">](#/)
-[<img src="https://img.shields.io/github/forks/MP3Martin/umimeto-solver">](#/)
-[<img src="https://img.shields.io/github/issues/MP3Martin/umimeto-solver">](#/)
+This is an updated fork of [MP3Martin/umimeto-solver](https://github.com/MP3Martin/umimeto-solver). The original project is archived, so this fork contains compatibility fixes for the current Umíme.to website.
 
-> **Initial idea from [<img src="https://camo.githubusercontent.com/b079fe922f00c4b86f1b724fbc2e8141c468794ce8adbc9b7456e5e1ad09c622/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f6769746875622e737667" alt="gh" width="18"/>](https://github.com/blakkcode/umimecesky-solver) https://github.com/blakkcode/umimecesky-solver** ❤️ <br>
-> **⚠For educational purposes only!⚠**
+> **For educational purposes only.** Use responsibly and follow Umíme.to's terms and rules.
 
-<br>
+## Quick start
 
-🇨🇿 Click **[here](https://github-com.translate.goog/MP3Martin/umimeto-solver?_x_tr_sl=en&_x_tr_tl=cs&_x_tr_hl=cs&_x_tr_pto=wapp)** to see this webpage in Czech language 🇨🇿
+### Option 1: Browser console
 
-# ⚠️ Not all exercises are working because of a new update on umimeto ⚠️
-
-# Code
-*(paste it into your browser console (`ctrl` + `shift` + `c` and select `console` tab) and press `enter`)*
+1. Open an exercise on Umíme.to.
+2. Open your browser's developer tools (`F12` or `Ctrl` + `Shift` + `I`).
+3. Select the **Console** tab.
+4. Paste this code and press Enter:
 
 ```js
-javascript:(function () { var script = document.createElement('script'); script.id="tmm_gdff56dgd56fs556gg"; script.src="https://mp3martin.github.io/umimeto-solver/source/main.min.js"; document.body.appendChild(script); script.onload = function () { document.getElementById("tmm_gdff56dgd56fs556gg").remove() } })();
-
+(function () {
+  const script = document.createElement("script");
+  script.src = "https://raw.githubusercontent.com/lun249199/umimeto-solver-updated/main/source/main.min.js";
+  script.onload = () => console.log("[umimeto-solver] Loaded");
+  script.onerror = () => console.error("[umimeto-solver] Could not load the script");
+  document.body.appendChild(script);
+})();
 ```
 
-*Tip: to run the code faster, type `javascript:` in the adress bar and paste the code after and press enter. **This faster way only works in Chrome! This method can be used to run the code on the phone.*** <br>
-***Or you can bookmark this (put it in `URL` field) and click it to start the solver anytime. (should work on every browser)***
+The solver's interface should appear on the page when the script loads.
 
+### Option 2: Bookmarklet
 
-• [Compressed code](https://github.com/MP3Martin/umimeto-solver/blob/main/source/main.min.js) <br>
-• [Uncompressed code](https://github.com/MP3Martin/umimeto-solver/blob/main/source/main.js)
+Create a new browser bookmark and paste the following into its **URL** field:
 
-# Info
+```js
+javascript:(()=>{const s=document.createElement("script");s.src="https://raw.githubusercontent.com/lun249199/umimeto-solver-updated/main/source/main.min.js";s.onload=()=>console.log("[umimeto-solver] Loaded");s.onerror=()=>console.error("[umimeto-solver] Could not load the script");document.body.appendChild(s)})();
+```
 
-### Supported exercise types
-* rozhodovačka
-* doplňovačka
-* závody
-* týmovka
-* vpisovačka
-* hádanky
-* diktát
-* úkolovka
-* otázky
-* rozřazovačka
-* roboti
-* mluvené diktáty
-* krok po kroku
-* rozbory
-* tvorba slov
-* přesouvání
-* čárky
-* závody v psaní
+Open an Umíme.to exercise and click the bookmark. Some browsers may require you to enable bookmarklets or use the address bar.
 
-# Examples
-### Videos
-<details>
-  <summary><strong>Click to see the video</strong></summary>
-	
-### ⚠️ obsolete + inaccurate ⚠️
-https://user-images.githubusercontent.com/60501493/173131436-96fed050-b999-46ea-89e3-83ed39955d31.mp4
+## Current status
 
-</details>
+The original solver was written for an older version of Umíme.to. Not every exercise type has been verified against the current website.
 
-### Screenshots
+- **Rozřazovačka:** updated for the current exercise page and tested.
+- **Other exercise types:** inherited from the original project; compatibility may vary.
 
-<img width="800wv" src="https://user-images.githubusercontent.com/60501493/176704999-c00f5053-ee79-45ae-ade1-a165bb74955e.png"></img>
+The Rozřazovačka solver places the available words and checks the answers. It does not automatically advance to the next exercise.
 
-# Contributing
-* You can create a pull request to merge your fork into this project
-* The file that contains the source code is [source/main.js](https://github.com/MP3Martin/umimeto-solver/blob/main/source/main.js) (other files are auto updated)
+## Source files
 
-<br><br>
+- [Readable source](source/main.js)
+- [Minified script](source/main.min.js)
 
-Thanks for **⭐** this repository. *❤️*
+For development, edit `source/main.js` first and keep `source/main.min.js` in sync.
 
-#### Archived because https://www.umimeto.org/ put their code in an anonymous function and now even obfuscated their code. Contact me at https://discord.mp3martin.xyz/ or [business@mp3martin.xyz](mailto:business@mp3martin.xyz) if you want to unarchive this repo and contribute.
+## Credits
+
+Based on [MP3Martin/umimeto-solver](https://github.com/MP3Martin/umimeto-solver), with the initial idea from [blakkcode/umimecesky-solver](https://github.com/blakkcode/umimecesky-solver).
+
+Licensed under **GNU GPL-3.0**. See [LICENSE](LICENSE).
