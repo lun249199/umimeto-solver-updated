@@ -1,0 +1,4334 @@
+Decoded response:
+Object { questions: (80) […], time: 0.05409097671508789 }
+debugger eval code:6:11
+JSON:
+{
+  "questions": [
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "64",
+        "problem": "3666",
+        "term": "nejspíš",
+        "description": "částice",
+        "rs": "64",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "8131"
+      },
+      "distractors": [
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.475291",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3467",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.245748",
+          "term": "trochu",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.475291",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2521",
+        "term": "jemu",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4251"
+      },
+      "distractors": [
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2308",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.096182",
+          "term": "pravidlo",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3711",
+          "rs": "65",
+          "from": "random-prob",
+          "ratio": "*",
+          "term": "bú",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "65",
+        "problem": "3701",
+        "term": "ach",
+        "description": "citoslovce",
+        "rs": "65",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "2814"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.097394",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.0950705",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.13323",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2887",
+        "term": "nikomu",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4434"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.215145",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.13323",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.269314",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3326",
+        "term": "pokosit",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4193"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.097394",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.141121",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.108203",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "63",
+        "problem": "3644",
+        "term": "přestože",
+        "description": "spojky",
+        "rs": "63",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5941"
+      },
+      "distractors": [
+        {
+          "problem": "2370",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0623038",
+          "term": "uhlí",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.475291",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "1996",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0623038",
+          "term": "kamenožrout",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "65",
+        "problem": "3726",
+        "term": "hej",
+        "description": "citoslovce",
+        "rs": "65",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3228"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.176433",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.130629",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.0950705",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2648",
+        "term": "s tou",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3906"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.269314",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.252794",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.108203",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2716",
+        "term": "samého",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5019"
+      },
+      "distractors": [
+        {
+          "problem": "2370",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.096182",
+          "term": "uhlí",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3193",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "umožňovat",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "63",
+        "problem": "3648",
+        "term": "ač",
+        "description": "spojky",
+        "rs": "63",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5040"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.176433",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.248915",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.209451",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3468",
+        "term": "malinko",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "6373"
+      },
+      "distractors": [
+        {
+          "problem": "2496",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "my",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.245748",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2395",
+          "rs": "57",
+          "from": "ruleta-prob",
+          "ratio": "0.24328",
+          "term": "nudný",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2065",
+        "term": "polibek",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3672"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.0623038",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0824674",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.113836",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2703",
+        "term": "s takovými",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5185"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.253014",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3234",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "rozumět",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3203",
+        "term": "učit",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3490"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.097394",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3468",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "malinko",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3369",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "tam",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2589",
+        "term": "o našem",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4150"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.253014",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "57",
+        "problem": "2442",
+        "term": "kuní",
+        "description": "přídavná jména",
+        "rs": "57",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5802"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.124415",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.24328",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.215145",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2307",
+        "term": "počítadlo",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3913"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.096182",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0824674",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.113836",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2765",
+        "term": "čího",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4727"
+      },
+      "distractors": [
+        {
+          "problem": "3407",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "teď",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2577",
+        "term": "s tvou",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4130"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.253014",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2441",
+          "rs": "57",
+          "from": "ruleta-prob",
+          "ratio": "0.215145",
+          "term": "jelení",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "65",
+        "problem": "3740",
+        "term": "hybaj",
+        "description": "citoslovce",
+        "rs": "65",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5309"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.133217",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.097394",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.13323",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2771",
+        "term": "kdopak",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4865"
+      },
+      "distractors": [
+        {
+          "problem": "3467",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "trochu",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2439",
+          "rs": "57",
+          "from": "ruleta-prob",
+          "ratio": "0.215145",
+          "term": "couvající",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3503",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "často",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3216",
+        "term": "drnčet",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4246"
+      },
+      "distractors": [
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.0770506",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2589",
+          "rs": "58",
+          "from": "random-prob",
+          "ratio": "*",
+          "term": "o našem",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3001",
+          "rs": "59",
+          "from": "ruleta-prob",
+          "ratio": "0.0563297",
+          "term": "milionkrát",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3302",
+        "term": "měřit",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3550"
+      },
+      "distractors": [
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.0770506",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3468",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "malinko",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3412",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "odjakživa",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3412",
+        "term": "odjakživa",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "7213"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.236742",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.209451",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.1088",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "57",
+        "problem": "2439",
+        "term": "couvající",
+        "description": "přídavná jména",
+        "rs": "57",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5696"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.0950705",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2577",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.215145",
+          "term": "s tvou",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2048",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.113836",
+          "term": "uhel",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2493",
+        "term": "on",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3657"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.253014",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.13323",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.248915",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3407",
+        "term": "teď",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "6342"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.24328",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.209451",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "59",
+          "from": "ruleta-cat",
+          "ratio": "0.0967825",
+          "term": "číslovky",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2100",
+        "term": "surfař",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4492"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "59",
+          "from": "ruleta-cat",
+          "ratio": "0.054242",
+          "term": "číslovky",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0824674",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.096182",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2578",
+        "term": "s tvojí",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4317"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.269314",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.096182",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.252794",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3467",
+        "term": "trochu",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "6493"
+      },
+      "distractors": [
+        {
+          "problem": "3216",
+          "rs": "60",
+          "from": "random-prob",
+          "ratio": "*",
+          "term": "drnčet",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2578",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "s tvojí",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2048",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.1088",
+          "term": "uhel",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2787",
+        "term": "jemuž",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4697"
+      },
+      "distractors": [
+        {
+          "problem": "3412",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "odjakživa",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3203",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "učit",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "65",
+        "problem": "3711",
+        "term": "bú",
+        "description": "citoslovce",
+        "rs": "65",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "2498"
+      },
+      "distractors": [
+        {
+          "problem": "2765",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "čího",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2307",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0776702",
+          "term": "počítadlo",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3193",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.097394",
+          "term": "umožňovat",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2118",
+        "term": "svízel",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5750"
+      },
+      "distractors": [
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.0623038",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3407",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.1088",
+          "term": "teď",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3216",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "drnčet",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3193",
+        "term": "umožňovat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4474"
+      },
+      "distractors": [
+        {
+          "problem": "2840",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "jakýsi",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2048",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "uhel",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3001",
+          "rs": "59",
+          "from": "random-prob",
+          "ratio": "*",
+          "term": "milionkrát",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2021",
+        "term": "včerejšek",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5280"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.0623038",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.1088",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.096182",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2370",
+        "term": "uhlí",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3346"
+      },
+      "distractors": [
+        {
+          "problem": "2787",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.096182",
+          "term": "jemuž",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3193",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "umožňovat",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3234",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "rozumět",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3254",
+        "term": "padat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3630"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0993516",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.141121",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.0905773",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "1967",
+        "term": "manažer",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3748"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.0776702",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0824674",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.0905773",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3338",
+        "term": "posedět",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4394"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.124415",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.0976626",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.0905773",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2096",
+        "term": "krotitel",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3875"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.0776702",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3388",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.1088",
+          "term": "kde",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2394",
+          "rs": "57",
+          "from": "ruleta-prob",
+          "ratio": "0.113836",
+          "term": "starý",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2308",
+        "term": "pravidlo",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3687"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "59",
+        "problem": "2932",
+        "term": "tolik",
+        "description": "číslovky",
+        "rs": "59",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3636"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.054242",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.094473",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.127709",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2871",
+        "term": "všeho",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5150"
+      },
+      "distractors": [
+        {
+          "problem": "3701",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "ach",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "random-prob",
+          "ratio": "*",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.253014",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2048",
+        "term": "uhel",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3999"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0824674",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.113836",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.0714964",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3061",
+        "term": "plakat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3471"
+      },
+      "distractors": [
+        {
+          "problem": "2175",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "noha",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.0770506",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2577",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "s tvou",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "65",
+        "problem": "3757",
+        "term": "běda",
+        "description": "citoslovce",
+        "rs": "65",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "6221"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.176433",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.130629",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "59",
+          "from": "ruleta-cat",
+          "ratio": "0.0713266",
+          "term": "číslovky",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3234",
+        "term": "rozumět",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4106"
+      },
+      "distractors": [
+        {
+          "problem": "2416",
+          "rs": "57",
+          "from": "ruleta-prob",
+          "ratio": "0.124415",
+          "term": "rezavé",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2308",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "pravidlo",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2577",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "s tvou",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "1999",
+        "term": "smrtelník",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4019"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.113836",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.0776702",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.0714964",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2760",
+        "term": "jací",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5296"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "59",
+          "from": "ruleta-cat",
+          "ratio": "0.094473",
+          "term": "číslovky",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "63",
+          "from": "ruleta-cat",
+          "ratio": "0.248915",
+          "term": "spojky",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.13323",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "1996",
+        "term": "kamenožrout",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4983"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.1088",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.0905773",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.113836",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3313",
+        "term": "zbankrotovat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4695"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.0905773",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.124415",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0993516",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2840",
+        "term": "jakýsi",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4684"
+      },
+      "distractors": [
+        {
+          "problem": "1999",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.096182",
+          "term": "smrtelník",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3468",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "malinko",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3039",
+        "term": "kvést",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3698"
+      },
+      "distractors": [
+        {
+          "problem": "1996",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "kamenožrout",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2370",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "uhlí",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3467",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "trochu",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2067",
+        "term": "nosník",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4452"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.0776702",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3467",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.1088",
+          "term": "trochu",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3068",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "vázat",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3277",
+        "term": "mýtit",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4399"
+      },
+      "distractors": [
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.0993516",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3412",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "odjakživa",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.097394",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3068",
+        "term": "vázat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3694"
+      },
+      "distractors": [
+        {
+          "problem": "3407",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "teď",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3757",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.097394",
+          "term": "běda",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2980",
+          "rs": "59",
+          "from": "ruleta-prob",
+          "ratio": "0.0563297",
+          "term": "několikerý",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3388",
+        "term": "kde",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5174"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "59",
+        "problem": "2980",
+        "term": "několikerý",
+        "description": "číslovky",
+        "rs": "59",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3493"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.0967825",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.127709",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.094473",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3044",
+        "term": "ustlat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4323"
+      },
+      "distractors": [
+        {
+          "problem": "2441",
+          "rs": "57",
+          "from": "ruleta-prob",
+          "ratio": "0.124415",
+          "term": "jelení",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2577",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "s tvou",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2370",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "uhlí",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2139",
+        "term": "starosta",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3722"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.0905773",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.0776702",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "59",
+          "from": "ruleta-cat",
+          "ratio": "0.054242",
+          "term": "číslovky",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2695",
+        "term": "o oněch",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5053"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.253014",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.252794",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.269314",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "57",
+        "problem": "2394",
+        "term": "starý",
+        "description": "přídavná jména",
+        "rs": "57",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4464"
+      },
+      "distractors": [
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.130832",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3467",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.24328",
+          "term": "trochu",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.0950705",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2699",
+        "term": "takové",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5132"
+      },
+      "distractors": [
+        {
+          "problem": "3313",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "zbankrotovat",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.13323",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3369",
+        "term": "tam",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5957"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.269314",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.236742",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.24328",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3185",
+        "term": "hubovat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4222"
+      },
+      "distractors": [
+        {
+          "problem": "3726",
+          "rs": "65",
+          "from": "random-prob",
+          "ratio": "*",
+          "term": "hej",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2067",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "nosník",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3701",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.097394",
+          "term": "ach",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3503",
+        "term": "často",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "6410"
+      },
+      "distractors": [
+        {
+          "problem": "2787",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "jemuž",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.245748",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3135",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.141121",
+          "term": "hrnout",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "59",
+        "problem": "3001",
+        "term": "milionkrát",
+        "description": "číslovky",
+        "rs": "59",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3150"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.127709",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "65",
+          "from": "ruleta-cat",
+          "ratio": "0.0713266",
+          "term": "citoslovce",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.094473",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "57",
+        "problem": "2408",
+        "term": "tvrdohlavý",
+        "description": "přídavná jména",
+        "rs": "57",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5209"
+      },
+      "distractors": [
+        {
+          "problem": "2765",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.215145",
+          "term": "čího",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.130832",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2771",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.215145",
+          "term": "kdopak",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "61",
+        "problem": "3678",
+        "term": "pouze",
+        "description": "příslovce",
+        "rs": "61",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "6805"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.1088",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.141121",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.24328",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "57",
+        "problem": "2416",
+        "term": "rezavé",
+        "description": "přídavná jména",
+        "rs": "57",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5699"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.127129",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "ruleta-cat",
+          "ratio": "0.124415",
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.215145",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3063",
+        "term": "navázat",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4729"
+      },
+      "distractors": [
+        {
+          "problem": "3757",
+          "rs": "65",
+          "from": "ruleta-prob",
+          "ratio": "0.097394",
+          "term": "běda",
+          "description": "citoslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.0770506",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2765",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "čího",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "57",
+        "problem": "2441",
+        "term": "jelení",
+        "description": "přídavná jména",
+        "rs": "57",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4596"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.127129",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.113836",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.24328",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2639",
+        "term": "toho",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5000"
+      },
+      "distractors": [
+        {
+          "problem": "3467",
+          "rs": "61",
+          "from": "ruleta-prob",
+          "ratio": "0.269314",
+          "term": "trochu",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.253014",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3290",
+        "term": "trávit",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4300"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.124415",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0993516",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "58",
+          "from": "ruleta-cat",
+          "ratio": "0.108203",
+          "term": "zájmena",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "2039",
+        "term": "Příbor",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3944"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "57",
+          "from": "ruleta-cat",
+          "ratio": "0.113836",
+          "term": "přídavná jména",
+          "description": "přídavná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "62",
+          "from": "ruleta-cat",
+          "ratio": "0.0714964",
+          "term": "předložky",
+          "description": "předložky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "59",
+          "from": "ruleta-cat",
+          "ratio": "0.054242",
+          "term": "číslovky",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "58",
+        "problem": "2828",
+        "term": "někdo",
+        "description": "zájmena",
+        "rs": "58",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4646"
+      },
+      "distractors": [
+        {
+          "problem": "3648",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "ač",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3644",
+          "rs": "63",
+          "from": "ruleta-prob",
+          "ratio": "0.248915",
+          "term": "přestože",
+          "description": "spojky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2370",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.096182",
+          "term": "uhlí",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "56",
+        "problem": "1973",
+        "term": "biolog",
+        "description": "podstatná jména",
+        "rs": "56",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "3940"
+      },
+      "distractors": [
+        {
+          "problem": "2765",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.096182",
+          "term": "čího",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "3068",
+          "rs": "60",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "vázat",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2716",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.096182",
+          "term": "samého",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseTerm",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3075",
+        "term": "vyvléct",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4757"
+      },
+      "distractors": [
+        {
+          "problem": "3666",
+          "rs": "64",
+          "from": "ruleta-prob",
+          "ratio": "0.0993516",
+          "term": "nejspíš",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2307",
+          "rs": "56",
+          "from": "ruleta-prob",
+          "ratio": "0.0905773",
+          "term": "počítadlo",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": "2648",
+          "rs": "58",
+          "from": "ruleta-prob",
+          "ratio": "0.108203",
+          "term": "s tou",
+          "description": "zájmena",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "60",
+        "problem": "3135",
+        "term": "hrnout",
+        "description": "slovesa",
+        "rs": "60",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "4431"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "ruleta-cat",
+          "ratio": "0.0993516",
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "61",
+          "from": "ruleta-cat",
+          "ratio": "0.141121",
+          "term": "příslovce",
+          "description": "příslovce",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "56",
+          "from": "ruleta-cat",
+          "ratio": "0.0905773",
+          "term": "podstatná jména",
+          "description": "podstatná jména",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    },
+    {
+      "type": "chooseCategory",
+      "ps": "1308",
+      "question": {
+        "id": "57",
+        "problem": "2440",
+        "term": "rákosový",
+        "description": "přídavná jména",
+        "rs": "57",
+        "correct": 1,
+        "image": "",
+        "sound": "",
+        "explanation": "",
+        "medianResponseTime": "5554"
+      },
+      "distractors": [
+        {
+          "problem": -1,
+          "rs": "60",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "slovesa",
+          "description": "slovesa",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "59",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "číslovky",
+          "description": "číslovky",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        },
+        {
+          "problem": -1,
+          "rs": "64",
+          "from": "remains-cat",
+          "ratio": -1,
+          "term": "částice",
+          "description": "částice",
+          "correct": 0,
+          "image": "",
+          "sound": "",
+          "explanation": ""
+        }
+      ]
+    }
+  ],
+  "time": 0.05409097671508789
+}
+debugger eval code:7:11
+Top
+
+​
+
