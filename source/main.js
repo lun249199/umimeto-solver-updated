@@ -912,14 +912,7 @@ if (window.$) {
         const correctVariant = gap.querySelector('.inlineVariant[correct="1"]');
         if (!correctVariant) continue;
 
-        window.gapId = Number(gap.id.replace(/^gap/, ''));
-        window.gapId = Number(gap.id.replace(/^gap/, ''));
-        gap.setAttribute('answered', '1');
-        if (typeof clickVariant === 'function' && typeof $ === 'function') {
-          clickVariant($(correctVariant));
-        } else {
-          correctVariant.click();
-        }
+        correctVariant.click();
         console.log('[umimeto-solver] Correct answer:', correctVariant.innerText.trim());
       }
     } catch (error) {
