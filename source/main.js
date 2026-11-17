@@ -1117,6 +1117,14 @@ if (window.$) {
           }
         }
 
+        // Only use the visible-option completeness check when the prompt is
+        // itself a category. For word prompts, keep fetching until the prompt
+        // has a category mapping; otherwise unrelated known options can stop
+        // the randomized search too early.
+        const promptIsCategory = [...categoriesByTerm.values()]
+          .some(categories => categories.has(normalizeLoose(prompt)));
+        if (!promptIsCategory) return { complete: false, matches: [] };
+
         // Category prompt → find the visible words belonging to that category.
         const optionCategories = actual.map(value => categoriesByTerm.get(normalizeLoose(value)));
         const complete = optionCategories.every(
