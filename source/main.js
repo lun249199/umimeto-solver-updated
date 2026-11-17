@@ -1938,26 +1938,35 @@ if (window.$) {
       const solutionButton = document.getElementById('solution');
       const evaluateButton = document.getElementById('evaluate');
       const nextButton = document.getElementById('next');
-      const isVisible = function (element) {
-        return !!element &&
-          getComputedStyle(element).display !== 'none' &&
-          getComputedStyle(element).visibility !== 'hidden' &&
-          !element.disabled;
-      };
+      const targets = [...document.querySelectorAll('#plan .target')];
+      const filledTargets = targets.filter(target => target.querySelector('.card')).length;
+      const isVisible = element => !!element &&
+        getComputedStyle(element).display !== 'none' &&
+        getComputedStyle(element).visibility !== 'hidden' &&
+        !element.disabled;
 
-      // Advance after a successful evaluation.
+      // The next button is only shown after the answer has been evaluated.
       if (isVisible(nextButton)) {
         nextButton.click();
         console.log('[umimeto-solver] Presouvani: next question');
         return;
       }
 
-      // The site's own solution button correctly places all cards,
-      // including on the first question where no shuffle mapping was captured.
-      if (isVisible(solutionButton) && isVisible(evaluateButton)) {
+      if (!solutionButton || !evaluateButton || !targets.length) return;
+
+      // The site's solution button is intentionally hidden, but its click
+      // handler still works. Use it to place every card into its target.
+      if (filledTargets === 0) {
         solutionButton.click();
+        console.log('[umimeto-solver] Presouvani: solution applied');
+        return;
+      }
+
+      // Evaluate on the next timer tick, after the solution has populated
+      // the targets. Avoid evaluating a partially filled arrangement.
+      if (filledTargets === targets.length && isVisible(evaluateButton)) {
         evaluateButton.click();
-        console.log('[umimeto-solver] Presouvani: solution applied and evaluated');
+        console.log('[umimeto-solver] Presouvani: answer evaluated');
       }
     } catch (error) {
       console.error('[umimeto-solver] Presouvani:', error);
