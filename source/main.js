@@ -913,6 +913,7 @@ if (window.$) {
         if (!correctVariant) continue;
 
         window.gapId = Number(gap.id.replace(/^gap/, ''));
+        window.gapId = Number(gap.id.replace(/^gap/, ''));
         gap.setAttribute('answered', '1');
         if (typeof clickVariant === 'function' && typeof $ === 'function') {
           clickVariant($(correctVariant));
