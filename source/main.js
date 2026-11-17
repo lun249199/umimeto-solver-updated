@@ -906,6 +906,7 @@ if (window.$) {
     const optionElements = [...(wrapper?.querySelectorAll('.options [data-index]') || [])];
     if (!questionElement || !optionElements.length) return;
 
+    const isTymovka = new URLSearchParams(window.location.search).get('p') === 'tymovka';
     const normalize = value => String(value ?? '')
       .normalize('NFKC')
       .replace(/\s+/g, ' ')
@@ -915,16 +916,40 @@ if (window.$) {
     const visibleQuestion = normalize(questionElement.innerText || questionElement.textContent);
     const visibleOptions = optionElements.map(option => normalize(option.innerText || option.textContent));
     if (!visibleQuestion || visibleOptions.some(option => !option)) return;
-    if (optionElements.some(option => option.classList.contains('correct') || option.classList.contains('wrong'))) return;
 
     const signature = JSON.stringify([visibleQuestion, visibleOptions]);
-    if (signature === window.raceSolverLastSignature) return;
+    const alreadyAnswered = optionElements.some(option =>
+      option.classList.contains('correct') || option.classList.contains('wrong')
+    );
+
+    // Týmovka requires the administrator to reveal the results and then
+    // advance the game. Automate those controls only after an answer exists.
+    if (isTymovka && alreadyAnswered) {
+      const showSolution = document.getElementById('show-solution');
+      const nextButton = document.getElementById('next-use');
+      const isVisible = element => element &&
+        getComputedStyle(element).display !== 'none' &&
+        !element.disabled;
+
+      if (isVisible(nextButton) && window.tymovkaAdvancedSignature !== signature) {
+        window.tymovkaAdvancedSignature = signature;
+        console.log('[umimeto-solver] Týmovka — continuing to next question.');
+        nextButton.click();
+      } else if (isVisible(showSolution) && window.tymovkaRevealSignature !== signature) {
+        window.tymovkaRevealSignature = signature;
+        console.log('[umimeto-solver] Týmovka — revealing results.');
+        showSolution.click();
+      }
+      return;
+    }
+
+    if (alreadyAnswered || signature === window.raceSolverLastSignature) return;
 
     window.raceSolverBusy = true;
     try {
       if (!window.raceSolverDataPromise) {
         window.raceSolverDataPromise = (async () => {
-          const exerciseType = new URLSearchParams(window.location.search).get('p') === 'tymovka' ? 'tymovka' : 'zavody';
+          const exerciseType = isTymovka ? 'tymovka' : 'zavody';
           const response = await fetch(`${newApiUrl}/exercise/${exerciseType}/${gameId}/questions`);
           if (!response.ok) throw new Error(`Question request failed: ${response.status}`);
           const encrypted = await response.text();
@@ -957,7 +982,7 @@ if (window.$) {
       });
 
       if (matches.length !== 1) {
-        console.warn('[umimeto-solver] Závody: expected one question match, found:', matches.length, {
+        console.warn(`[umimeto-solver] ${isTymovka ? 'Týmovka' : 'Závody'}: expected one question match, found:`, matches.length, {
           question: visibleQuestion,
           options: visibleOptions,
           matches: matches.length,
@@ -967,17 +992,17 @@ if (window.$) {
       }
 
       const item = matches[0];
-      const correctIndex = item.options.findIndex(option => option.correct === 1);
+      const correctIndex = item.options.findIndex(option => option.correct === 1 || option.correct === true);
       if (correctIndex < 0 || !optionElements[correctIndex]) {
-        console.warn('[umimeto-solver] Závody: correct option not found:', item);
+        console.warn(`[umimeto-solver] ${isTymovka ? 'Týmovka' : 'Závody'}: correct option not found:`, item);
         return;
       }
 
       window.raceSolverLastSignature = signature;
-      console.log('[umimeto-solver] Závody — correct answer:', visibleOptions[correctIndex]);
+      console.log(`[umimeto-solver] ${isTymovka ? 'Týmovka' : 'Závody'} — correct answer:`, visibleOptions[correctIndex]);
       optionElements[correctIndex].click();
     } catch (error) {
-      console.error('[umimeto-solver] Závody:', error);
+      console.error(`[umimeto-solver] ${isTymovka ? 'Týmovka' : 'Závody'}:`, error);
       window.raceSolverDataPromise = null;
     } finally {
       window.raceSolverBusy = false;
