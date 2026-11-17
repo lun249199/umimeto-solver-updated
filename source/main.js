@@ -2224,6 +2224,107 @@ if (window.$) {
     }
   }
 
+  async function answer_slova_ve_vetach () {
+    if (window.__slovaVetBusy) return;
+    const table = document.getElementById('multi-lines-table');
+    const evaluateButton = document.getElementById('evaluate');
+    const nextButton = document.getElementById('next');
+    if (!table || !evaluateButton) return;
+
+    const isVisible = element => !!element &&
+      getComputedStyle(element).display !== 'none' &&
+      getComputedStyle(element).visibility !== 'hidden' &&
+      element.getClientRects().length > 0;
+
+    window.__slovaVetBusy = true;
+    try {
+      if (!window.__slovaVetDataPromise) {
+        const requestUrl = performance.getEntriesByType('resource')
+          .map(entry => entry.name)
+          .find(url => url.includes('/ajax/universalLoadMedalPs.php?'));
+        if (!requestUrl) {
+          console.warn('[umimeto-solver] Slova ve větách: medal request URL not found');
+          return;
+        }
+        window.__slovaVetDataPromise = (async () => {
+          const response = await fetch(requestUrl, { credentials: 'same-origin' });
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          const encoded = await response.text();
+          const reversed = encoded.replace(/[a-z]/g, char =>
+            String.fromCharCode(219 - char.charCodeAt(0))
+          );
+          const decoded = decodeURIComponent(
+            [...atob(reversed)].map(char =>
+              '%' + char.charCodeAt(0).toString(16).padStart(2, '0')
+            ).join('')
+          );
+          return JSON.parse(decoded);
+        })();
+      }
+
+      const data = await window.__slovaVetDataPromise;
+      const pageId = window.location.pathname.split('/').filter(Boolean).pop();
+      const currentItem = data.items.find(item => String(item.id) === String(pageId));
+      if (!currentItem?.item?.sentences) {
+        console.warn('[umimeto-solver] Slova ve větách: current item not found', pageId);
+        return;
+      }
+
+      const normalize = value => String(value ?? '')
+        .normalize('NFKC')
+        .replace(/\\s+/g, ' ')
+        .trim()
+        .toLocaleLowerCase('cs');
+
+      const words = [...document.querySelectorAll('.word')];
+      const boxes = [...document.querySelectorAll('.wordBox')];
+      const usedWords = new Set();
+
+      for (const box of boxes) {
+        const match = box.id.match(/^wordBox(\\d+)-(\\d+)$/);
+        if (!match) continue;
+        const row = Number(match[1]);
+        const slot = Number(match[2]);
+        const correctWord = currentItem.item.sentences[row]?.solution?.[slot];
+        if (correctWord == null) continue;
+
+        const word = words.find(element =>
+          !usedWords.has(element) && normalize(element.textContent) === normalize(correctWord)
+        );
+        if (!word) {
+          console.warn('[umimeto-solver] Slova ve větách: answer card not found', correctWord);
+          continue;
+        }
+
+        usedWords.add(word);
+        $(word).position({ of: $(box), my: 'left top', at: 'left top' });
+        $(box).attr('currentWord', word.id);
+        $(word).attr('currentBox', box.id);
+      }
+
+      const allPlaced = boxes.every(box => String($(box).attr('currentWord')) !== '-1');
+      if (!allPlaced) return;
+
+      const itemKey = String(currentItem.id);
+      if (window.__slovaVetEvaluated !== itemKey) {
+        window.__slovaVetEvaluated = itemKey;
+        console.log('[umimeto-solver] Slova ve větách: evaluating', itemKey);
+        $(evaluateButton).trigger('click');
+        return;
+      }
+
+      if (isVisible(nextButton) && !nextButton.classList.contains('disabled')) {
+        window.__slovaVetEvaluated = null;
+        $(nextButton).trigger('click');
+      }
+    } catch (error) {
+      console.error('[umimeto-solver] Slova ve větách:', error);
+      window.__slovaVetDataPromise = null;
+    } finally {
+      window.__slovaVetBusy = false;
+    }
+  }
+
   async function answer_carky () {
     if (window.__carkyBusy) return;
 
@@ -2512,6 +2613,13 @@ if (window.$) {
       // loop
       window.sstop_timer.start(function () {
         answer_presouvani();
+      }, 1500);
+    } else if (document.getElementById('multi-lines-table') &&
+               document.querySelector('.wordBox')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_slova_ve_vetach();
+      window.sstop_timer.start(function () {
+        answer_slova_ve_vetach();
       }, 1500);
     } else if (window.location.pathname.includes('/porozumeni-cteni') ||
                window.location.pathname.includes('/porozumeni')) {
