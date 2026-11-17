@@ -1108,15 +1108,21 @@ if (window.$) {
       };
 
       let categoryResult = findCategoryMatches();
+      // Fetch randomized batches in small parallel groups to avoid the
+      // long delay caused by requesting up to 50 batches sequentially.
       for (
         let attempt = 0;
-        matches.length === 0 && !categoryResult.complete && attempt < 50;
+        matches.length === 0 && !categoryResult.complete && attempt < 10;
         attempt++
       ) {
-        const data = await window.fjWEDGjivdsXloadQuestionData(
-          'mcqLoadQuestionsDynamicCategoryData.php'
+        const batches = await Promise.all(
+          Array.from({ length: 5 }, () =>
+            window.fjWEDGjivdsXloadQuestionData(
+              'mcqLoadQuestionsDynamicCategoryData.php'
+            )
+          )
         );
-        addRecords(data);
+        for (const data of batches) addRecords(data);
         matches = findMatches();
         categoryResult = findCategoryMatches();
       }
