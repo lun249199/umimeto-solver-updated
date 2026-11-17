@@ -2412,7 +2412,23 @@ if (window.$) {
           visible === normalize(completed);
       }));
 
-    if (!entry) return;
+    if (!entry) {
+      // The first round is preloaded before this solver can capture its data.
+      // Show a notice instead of silently doing nothing.
+      if (!(window.__strileckaDataHistory || []).length) {
+        let notice = document.getElementById('sstop-strilecka-first-round-warning');
+        if (!notice) {
+          notice = document.createElement('div');
+          notice.id = 'sstop-strilecka-first-round-warning';
+          notice.textContent = 'Upozornění: První kolo nelze automaticky vyřešit. Automatické odpovídání začne od druhého kola.';
+          notice.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:2147483647;background:#fff3cd;color:#664d03;border:1px solid #ffecb5;border-radius:6px;padding:10px 16px;font: bold 14px/1.4 sans-serif;text-align:center;max-width:90vw;box-shadow:0 2px 8px rgba(0,0,0,.25);';
+          document.body.appendChild(notice);
+        }
+      }
+      return;
+    }
+
+    document.getElementById('sstop-strilecka-first-round-warning')?.remove();
 
     for (const word of words) {
       if (!window.sstop_timer?.running) return;
