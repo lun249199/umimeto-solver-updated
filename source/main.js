@@ -1507,7 +1507,7 @@ if (window.$) {
           console.warn('[umimeto-solver] Legacy question loader unavailable:', e);
         });
     }
-    if (ulr_ex_type.includes('doplnovacka') || ulr_ex_type.includes('rozhodovacka')) {
+    if (ulr_ex_type.includes('doplnovacka') || ulr_ex_type.includes('rozhodovacka') || ulr_ex_type.includes('doplnovani-slov')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
       // run for the first time
       answer_doplnovacka();
