@@ -2325,43 +2325,48 @@ if (window.$) {
     }
   }
 
-  async function answer_strilecka () {
+  function answer_strilecka () {
     const plan = document.getElementById('plan');
-    if (!plan || typeof window.fjWEDGjivdsXloadQuestionData !== 'function') return;
+    if (!plan || !window.sstop_timer?.running) return;
 
-    // Watch for each new word as soon as the game adds it.
-    if (!window.__strileckaObserver) {
-      window.__strileckaObserver = new MutationObserver(() => {
-        answer_strilecka();
-      });
-      window.__strileckaObserver.observe(plan, { childList: true, subtree: true });
+    // The game and solver must share the exact same randomized level data.
+    // Capture the game's own request instead of requesting a second random set.
+    if (!window.__strileckaFetchHooked &&
+        typeof window.fjWEDGjivdsXloadQuestionData === 'function') {
+      const originalLoad = window.fjWEDGjivdsXloadQuestionData;
+      window.fjWEDGjivdsXloadQuestionData = async function (endpoint, ...args) {
+        const data = await originalLoad.call(this, endpoint, ...args);
+        if (endpoint === 'loadStrilecka.php') {
+          window.__strileckaData = data;
+          window.__strileckaDataLevel = typeof level !== 'undefined' ? Number(level) : 1;
+          console.log('[umimeto-solver] Střílečka: captured game level data',
+            window.__strileckaDataLevel, data.items?.length);
+        }
+        return data;
+      };
+      window.__strileckaFetchHooked = true;
+    }
+
+    // Disconnect an observer left behind by an older solver version.
+    if (window.__strileckaObserver) {
+      window.__strileckaObserver.disconnect();
+      window.__strileckaObserver = null;
     }
 
     const currentLevel = typeof level !== 'undefined' ? Number(level) : 1;
-    if (window.__strileckaLoadedLevel !== currentLevel) {
-      window.__strileckaLoadedLevel = currentLevel;
-      window.__strileckaAnsweredLevel = currentLevel;
-      window.__strileckaDataPromise =
-        window.fjWEDGjivdsXloadQuestionData('loadStrilecka.php');
-    }
+    const data = window.__strileckaData;
+    if (!data || window.__strileckaDataLevel !== currentLevel) return;
+    if (!window.sstop_timer?.running) return;
 
-    try {
-      const data = await window.__strileckaDataPromise;
-      if ((typeof level !== 'undefined' ? Number(level) : 1) !== currentLevel) return;
-
-      for (const word of plan.querySelectorAll('.word[data-index]')) {
-        const index = Number(word.dataset.index);
-        if (data.items?.[index]?.correct === 1 &&
-            !word.classList.contains('correct') &&
-            !word.classList.contains('wrong')) {
-          word.click();
-          console.log('[umimeto-solver] Střílečka: shot word', index);
-        }
+    for (const word of plan.querySelectorAll('.word[data-index]')) {
+      if (!window.sstop_timer?.running) return;
+      const index = Number(word.dataset.index);
+      if (Number(data.items?.[index]?.correct) === 1 &&
+          !word.classList.contains('correct') &&
+          !word.classList.contains('wrong')) {
+        word.click();
+        console.log('[umimeto-solver] Střílečka: shot word', index);
       }
-    } catch (error) {
-      console.error('[umimeto-solver] Střílečka:', error);
-      window.__strileckaDataPromise = null;
-      window.__strileckaLoadedLevel = null;
     }
   }
 
@@ -2650,10 +2655,13 @@ if (window.$) {
       }, 1500);
     } else if (window.location.pathname.includes('/strilecka')) {
       console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
-      answer_strilecka();
+      if (window.__strileckaObserver) {
+        window.__strileckaObserver.disconnect();
+        window.__strileckaObserver = null;
+      }
       window.sstop_timer.start(function () {
         answer_strilecka();
-      }, 500);
+      }, 100);
     } else if (window.location.pathname.includes('/vtipy')) {
       console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
       answer_vtipy();
