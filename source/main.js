@@ -986,16 +986,61 @@ if (window.$) {
     }
   }
 
-  function answer_hadanky () {
-    let correct_answer = '';
+  async function answer_hadanky () {
+    if (window.hadankyBusy) return;
+
+    const pageId = window.location.pathname.split('/')[2];
+    const answerBox = document.querySelector('#answer0 input');
+    const evaluateButton = document.getElementById('evaluate');
+    const nextButton = document.getElementById('next');
+    if (!pageId || !answerBox || !evaluateButton || !nextButton) return;
+
+    if (getComputedStyle(nextButton).display !== 'none' && !nextButton.disabled) {
+      nextButton.click();
+      return;
+    }
+    if (getComputedStyle(evaluateButton).display === 'none' || evaluateButton.disabled) return;
+
+    window.hadankyBusy = true;
     try {
-      const answers = questions.find(q => q.id == window.location.pathname.split('/')[2]);
-      correct_answer = answers.item.question[1][1].answer[0];
-      console.log('Correct answer: ' + correct_answer);
-      document.getElementById('answer0').value = correct_answer;
-      document.getElementById('evaluate').click();
-      nextQuestion();
-    } catch (error) {}
+      if (!window.hadankyDataPromise) {
+        window.hadankyDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('universalLoadItems.php');
+      }
+
+      let data = await window.hadankyDataPromise;
+      let item = (data.items || []).find(entry => String(entry.id) === pageId);
+
+      // The endpoint returns small randomized batches; retry until this riddle appears.
+      for (let attempt = 0; !item && attempt < 10; attempt++) {
+        data = await window.fjWEDGjivdsXloadQuestionData('universalLoadItems.php');
+        window.hadankyDataPromise = Promise.resolve(data);
+        item = (data.items || []).find(entry => String(entry.id) === pageId);
+      }
+
+      const answerSegment = item?.item?.question?.find(
+        segment => Array.isArray(segment) && segment[0] === 'input'
+      );
+      const correctAnswer = answerSegment?.[1]?.answer?.[0];
+      if (typeof correctAnswer !== 'string' || !correctAnswer.length) {
+        console.warn('[umimeto-solver] Hádanky: answer not found for riddle:', pageId, {
+          itemFound: Boolean(item),
+          item
+        });
+        return;
+      }
+
+      answerBox.value = correctAnswer;
+      answerBox.dispatchEvent(new Event('input', { bubbles: true }));
+      answerBox.dispatchEvent(new Event('change', { bubbles: true }));
+      console.log('[umimeto-solver] Hádanky — correct answer:', correctAnswer);
+      evaluateButton.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Hádanky:', error);
+      window.hadankyDataPromise = null;
+    } finally {
+      window.hadankyBusy = false;
+    }
   }
 
   function answer_doplnovani_slov () {
