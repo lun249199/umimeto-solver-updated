@@ -2327,41 +2327,100 @@ if (window.$) {
 
   function answer_strilecka () {
     const plan = document.getElementById('plan');
-    if (!plan || !window.sstop_timer?.running) return;
+    const playground = document.getElementById('playground');
+    if (!plan || !playground || !window.sstop_timer?.running) return;
 
-    // The game and solver must share the exact same randomized level data.
-    // Capture the game's own request instead of requesting a second random set.
+    // Capture the exact randomized data returned to the game. The game
+    // preloads the next round after victory/loss, before its next button
+    // is clicked, so keep a history and match it against the visible board.
     if (!window.__strileckaFetchHooked &&
         typeof window.fjWEDGjivdsXloadQuestionData === 'function') {
-      const originalLoad = window.fjWEDGjivdsXloadQuestionData;
+      window.__strileckaOriginalLoader =
+        window.fjWEDGjivdsXloadQuestionData;
+
+      window.__strileckaDataHistory = [];
       window.fjWEDGjivdsXloadQuestionData = async function (endpoint, ...args) {
-        const data = await originalLoad.call(this, endpoint, ...args);
-        if (endpoint === 'loadStrilecka.php') {
-          window.__strileckaData = data;
-          window.__strileckaDataLevel = typeof level !== 'undefined' ? Number(level) : 1;
-          console.log('[umimeto-solver] Střílečka: captured game level data',
-            window.__strileckaDataLevel, data.items?.length);
+        const data = await window.__strileckaOriginalLoader.call(this, endpoint, ...args);
+
+        if (endpoint === 'loadStrilecka.php' && Array.isArray(data?.items)) {
+          window.__strileckaDataHistory.push({
+            time: Date.now(),
+            items: data.items
+          });
+          console.log('[umimeto-solver] Střílečka: captured round data',
+            data.items.length);
         }
+
         return data;
       };
       window.__strileckaFetchHooked = true;
     }
 
-    // Disconnect an observer left behind by an older solver version.
-    if (window.__strileckaObserver) {
-      window.__strileckaObserver.disconnect();
-      window.__strileckaObserver = null;
+    const isVisible = element => !!element &&
+      getComputedStyle(element).display !== 'none' &&
+      getComputedStyle(element).visibility !== 'hidden' &&
+      element.getClientRects().length > 0;
+
+    // The game loads the next round before showing its Next/Retry button.
+    // Start it only after the response has been captured by the hook.
+    if (getComputedStyle(playground).display === 'none') {
+      if (window.__strileckaTransitioning) return;
+
+      const button = [...document.querySelectorAll(
+        '#exercise [data-data="load-level"]'
+      )].find(element =>
+        isVisible(element) &&
+        ['Další level', 'Opakovat level'].includes(element.textContent.trim())
+      );
+
+      if (button) {
+        window.__strileckaTransitioning = true;
+        console.log('[umimeto-solver] Střílečka: advancing',
+          button.textContent.trim());
+        button.click();
+      }
+      return;
     }
 
-    const currentLevel = typeof level !== 'undefined' ? Number(level) : 1;
-    const data = window.__strileckaData;
-    if (!data || window.__strileckaDataLevel !== currentLevel) return;
-    if (!window.sstop_timer?.running) return;
+    window.__strileckaTransitioning = false;
 
-    for (const word of plan.querySelectorAll('.word[data-index]')) {
+    const words = [...plan.querySelectorAll('.word[data-index]')];
+    // Wait for at least two words to avoid accidentally matching an old
+    // round on a single coincidentally identical word.
+    if (words.length < 2) return;
+
+    const normalize = value => String(value ?? '')
+      .replace(/\\s+/g, ' ')
+      .trim();
+
+    // Choose the newest captured response whose indexed terms correspond
+    // to every word currently rendered by the game. The game may render
+    // either the original underscore form or the completed form.
+    const entry = [...(window.__strileckaDataHistory || [])]
+      .reverse()
+      .find(candidate => words.every(word => {
+        const item = candidate.items?.[Number(word.dataset.index)];
+        if (!item) return false;
+
+        const term = (item.term || []).map(part => part?.[1] ?? '').join('');
+        const substitution = (item.substitution || [])
+          .map(part => part?.[1] ?? '').join('');
+        const completed = term.replace('_', substitution);
+        const visible = normalize(word.innerText);
+
+        return visible === normalize(term) ||
+          visible === normalize(completed);
+      }));
+
+    if (!entry) return;
+
+    for (const word of words) {
       if (!window.sstop_timer?.running) return;
+
       const index = Number(word.dataset.index);
-      if (Number(data.items?.[index]?.correct) === 1 &&
+      const item = entry.items[index];
+
+      if (Number(item?.correct) === 1 &&
           !word.classList.contains('correct') &&
           !word.classList.contains('wrong')) {
         word.click();
