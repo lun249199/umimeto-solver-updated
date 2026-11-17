@@ -881,16 +881,92 @@ if (window.$) {
     } catch (error) {}
   }
 
-  function answer_vpisovacka () {
-    let correct_answer = '';
+  async function answer_vpisovacka () {
+    if (window.vpisovackaBusy) return;
+
+    const questionContent = document.getElementById('question-content');
+    const evaluateButton = document.getElementById('evaluate');
+    const nextButton = document.getElementById('next');
+    if (!questionContent || !evaluateButton || !nextButton) return;
+
+    // After evaluation, advance using the exercise's own Next button.
+    if (getComputedStyle(nextButton).display !== 'none' && !nextButton.disabled) {
+      nextButton.click();
+      return;
+    }
+    if (getComputedStyle(evaluateButton).display === 'none' || evaluateButton.disabled) return;
+
+    const normalize = value => String(value ?? '')
+      .normalize('NFKC')
+      .replace(/\\s+/g, ' ')
+      .trim()
+      .toLocaleLowerCase('cs');
+
+    const visibleQuestion = questionContent.cloneNode(true);
+    visibleQuestion.querySelectorAll('[id^="answer"]').forEach(element => element.remove());
+    const prompt = normalize(visibleQuestion.innerText || visibleQuestion.textContent);
+    if (!prompt) return;
+
+    window.vpisovackaBusy = true;
     try {
-      const answers = questions.find(q => q.id == window.location.pathname.split('/')[2]);
-      correct_answer = answers.question[1][1].answer[0];
-      console.log('Correct answer: ' + correct_answer);
-      document.getElementById('answer0').value = correct_answer;
-      document.getElementById('evaluate').click();
-      nextQuestion();
-    } catch (error) {}
+      if (!window.vpisovackaDataPromise) {
+        window.vpisovackaDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('vpisovackaLoadWrittenAnswerData.php');
+      }
+
+      const data = await window.vpisovackaDataPromise;
+      const matches = (data.items || []).filter(item => {
+        if (!Array.isArray(item.question)) return false;
+        const itemPrompt = item.question
+          .filter(segment => Array.isArray(segment) && segment[0] === 'text')
+          .map(segment => segment[1] || '')
+          .join('');
+        return normalize(itemPrompt) === prompt;
+      });
+
+      if (matches.length !== 1) {
+        console.warn('[umimeto-solver] Vpisovačka: expected one question match, found:', matches.length, {
+          prompt,
+          matches: matches.length,
+          cachedItems: data.items?.length || 0
+        });
+        return;
+      }
+
+      const item = matches[0];
+      const answerSegments = item.question.filter(
+        segment => Array.isArray(segment) && segment[0] === 'input'
+      );
+      const answerInputs = [...questionContent.querySelectorAll('[id^="answer"] input')];
+
+      if (!answerSegments.length || answerSegments.length !== answerInputs.length) {
+        console.warn('[umimeto-solver] Vpisovačka: answer field count mismatch:', {
+          expected: answerSegments.length,
+          actual: answerInputs.length
+        });
+        return;
+      }
+
+      const answers = answerSegments.map(segment => segment[1]?.answer?.[0]);
+      if (answers.some(answer => typeof answer !== 'string' || !answer.length)) {
+        console.warn('[umimeto-solver] Vpisovačka: missing accepted answer:', answers);
+        return;
+      }
+
+      answerInputs.forEach((input, index) => {
+        input.value = answers[index];
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+
+      console.log('[umimeto-solver] Vpisovačka — correct answer:', answers.join(' / '));
+      evaluateButton.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Vpisovačka:', error);
+      window.vpisovackaDataPromise = null;
+    } finally {
+      window.vpisovackaBusy = false;
+    }
   }
 
   function answer_hadanky () {
