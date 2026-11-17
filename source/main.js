@@ -2325,6 +2325,108 @@ if (window.$) {
     }
   }
 
+  async function answer_vtipy () {
+    if (window.__vtipyBusy) return;
+    const joke = document.getElementById('joke');
+    if (!joke) return;
+
+    const isVisible = element => !!element &&
+      getComputedStyle(element).display !== 'none' &&
+      getComputedStyle(element).visibility !== 'hidden' &&
+      element.getClientRects().length > 0;
+
+    window.__vtipyBusy = true;
+    try {
+      if (!window.__vtipyDataPromise) {
+        if (typeof window.fjWEDGjivdsXloadQuestionData !== 'function') {
+          console.warn('[umimeto-solver] Vtipy: question loader unavailable');
+          return;
+        }
+        window.__vtipyDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('universalLoadItems.php');
+      }
+      const data = await window.__vtipyDataPromise;
+      const items = data?.items || [];
+      const info = document.getElementById('info');
+      const nextButton = info?.querySelector('.next');
+
+      // The game reveals its own Next button after all misspellings are hit.
+      if (isVisible(info) && isVisible(nextButton)) {
+        const currentId = window.__vtipyCurrentItemId;
+        if (currentId && window.__vtipyNextFor !== currentId) {
+          window.__vtipyNextFor = currentId;
+          console.log('[umimeto-solver] Vtipy: next joke', currentId);
+          nextButton.click();
+          window.__vtipyCurrentItemId = null;
+          window.__vtipyAnsweredId = null;
+        }
+        return;
+      }
+      if (isVisible(document.getElementById('finalBoard'))) return;
+
+      const visibleWords = [...joke.querySelectorAll('.word')];
+      if (!visibleWords.length) return;
+      const normalize = value => String(value ?? '')
+        .normalize('NFKC')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLocaleLowerCase('cs');
+
+      const pattern = /\[([^/]+)\/([^\]]*)\]/g;
+      const displayToken = token => {
+        const text = String(token)
+          .replace(pattern, '$2')
+          .replace(/-/g, '')
+          .replace(/_/g, ' ');
+        const holder = document.createElement('div');
+        holder.innerHTML = text;
+        return normalize(holder.textContent);
+      };
+
+      // vtipy.js splits the source joke on spaces before creating .word spans.
+      const currentItem = items.find(item => {
+        const tokens = String(item.item || '').split(' ');
+        return tokens.length === visibleWords.length &&
+          tokens.every((token, index) =>
+            displayToken(token) === normalize(visibleWords[index].textContent));
+      });
+
+      if (!currentItem) {
+        console.warn('[umimeto-solver] Vtipy: current joke not matched', {
+          visible: visibleWords.map(word => word.textContent),
+          candidates: items.map(item => item.name)
+        });
+        return;
+      }
+
+      window.__vtipyCurrentItemId = String(currentItem.id);
+      if (window.__vtipyAnsweredId === String(currentItem.id)) return;
+
+      const tokens = String(currentItem.item || '').split(' ');
+      const targetIndices = [];
+      tokens.forEach((token, index) => {
+        pattern.lastIndex = 0;
+        if (pattern.test(token)) targetIndices.push(index);
+      });
+      if (!targetIndices.length) {
+        console.warn('[umimeto-solver] Vtipy: no answer targets found', currentItem.name);
+        return;
+      }
+
+      window.__vtipyAnsweredId = String(currentItem.id);
+      console.log('[umimeto-solver] Vtipy answer:', currentItem.name,
+        '→ word indices', targetIndices);
+      for (const index of targetIndices) {
+        visibleWords[index]?.click();
+      }
+    } catch (error) {
+      console.error('[umimeto-solver] Vtipy:', error);
+      window.__vtipyDataPromise = null;
+    } finally {
+      window.__vtipyBusy = false;
+    }
+  }
+
   async function answer_carky () {
     if (window.__carkyBusy) return;
 
@@ -2505,6 +2607,12 @@ if (window.$) {
       // loop
       window.sstop_timer.start(function () {
         answer_vpisovacka();
+      }, 1500);
+    } else if (window.location.pathname.includes('/vtipy')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_vtipy();
+      window.sstop_timer.start(function () {
+        answer_vtipy();
       }, 1500);
     } else if (window.location.href.includes('/hadanky')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
