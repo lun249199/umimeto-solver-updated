@@ -898,6 +898,91 @@ if (window.$) {
     } catch (error) {}
   }
 
+  async function answer_race () {
+    if (window.raceSolverBusy) return;
+
+    const wrapper = document.getElementById('question-wrapper');
+    const questionElement = wrapper?.querySelector('[data-data="question"]');
+    const optionElements = [...(wrapper?.querySelectorAll('.options [data-index]') || [])];
+    if (!questionElement || !optionElements.length) return;
+
+    const normalize = value => String(value ?? '')
+      .normalize('NFKC')
+      .replace(/\\s+/g, ' ')
+      .trim()
+      .toLocaleLowerCase('cs');
+
+    const visibleQuestion = normalize(questionElement.innerText || questionElement.textContent);
+    const visibleOptions = optionElements.map(option => normalize(option.innerText || option.textContent));
+    if (!visibleQuestion || visibleOptions.some(option => !option)) return;
+    if (optionElements.some(option => option.classList.contains('correct') || option.classList.contains('wrong'))) return;
+
+    const signature = JSON.stringify([visibleQuestion, visibleOptions]);
+    if (signature === window.raceSolverLastSignature) return;
+
+    window.raceSolverBusy = true;
+    try {
+      if (!window.raceSolverDataPromise) {
+        window.raceSolverDataPromise = (async () => {
+          const response = await fetch(`${newApiUrl}/exercise/zavody/${gameId}/questions`);
+          if (!response.ok) throw new Error(`Question request failed: ${response.status}`);
+          const encrypted = await response.text();
+          const decoded = b64DecodeUnicode(fjWEDGjivdsXcryptoDecrypt(encrypted));
+          return JSON.parse(decoded);
+        })();
+      }
+
+      const data = await window.raceSolverDataPromise;
+      const getText = segments => {
+        let result = '';
+        const visit = value => {
+          if (!Array.isArray(value)) return;
+          if (value[0] === 'text' && typeof value[1] === 'string') {
+            result += value[1];
+            return;
+          }
+          value.forEach(visit);
+        };
+        visit(segments);
+        return result;
+      };
+
+      const matches = (data.items || []).filter(item => {
+        const question = normalize(getText(item.question));
+        const options = (item.options || []).map(option => normalize(getText(option.option)));
+        return question === visibleQuestion &&
+          options.length === visibleOptions.length &&
+          options.every((option, index) => option === visibleOptions[index]);
+      });
+
+      if (matches.length !== 1) {
+        console.warn('[umimeto-solver] Závody: expected one question match, found:', matches.length, {
+          question: visibleQuestion,
+          options: visibleOptions,
+          matches: matches.length,
+          itemCount: data.items?.length || 0
+        });
+        return;
+      }
+
+      const item = matches[0];
+      const correctIndex = item.options.findIndex(option => option.correct === 1);
+      if (correctIndex < 0 || !optionElements[correctIndex]) {
+        console.warn('[umimeto-solver] Závody: correct option not found:', item);
+        return;
+      }
+
+      window.raceSolverLastSignature = signature;
+      console.log('[umimeto-solver] Závody — correct answer:', visibleOptions[correctIndex]);
+      optionElements[correctIndex].click();
+    } catch (error) {
+      console.error('[umimeto-solver] Závody:', error);
+      window.raceSolverDataPromise = null;
+    } finally {
+      window.raceSolverBusy = false;
+    }
+  }
+
   async function answer_vpisovacka () {
     if (window.vpisovackaBusy) return;
 
@@ -1687,11 +1772,10 @@ if (window.$) {
       }, 1500);
     } else if (window.location.href.includes('?p=zavody') || window.location.href.includes('?p=tymovka')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
-      // run for the first time
-      answer_twoOp_zavody();
-      // loop
+      // The modern multiplayer race uses its own encrypted question API.
+      answer_race();
       window.sstop_timer.start(function () {
-        answer_twoOp_zavody();
+        answer_race();
       }, 1500);
     } else if (window.location.pathname.includes('/vpisovacka') || window.location.pathname.includes('/vpisovani-')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
