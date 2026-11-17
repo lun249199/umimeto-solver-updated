@@ -1693,6 +1693,21 @@ if (window.$) {
       const finalBoard = document.getElementById('finalBoard');
       const startButton = document.getElementById('startTyping');
 
+      // The completed dictation offers a separate "Další text" link.
+      if (finalBoard && getComputedStyle(finalBoard).display !== 'none') {
+        const nextText = finalBoard.querySelector('a.nextItem');
+        if (nextText) {
+          if (!window.__mluveneNextTextClicked) {
+            window.__mluveneNextTextClicked = true;
+            console.log('[umimeto-solver] Mluvené diktáty: next text');
+            nextText.click();
+          }
+          return;
+        }
+      } else {
+        window.__mluveneNextTextClicked = false;
+      }
+
       // Start the writing part when the introductory board is displayed.
       if (input && startButton && finalBoard &&
           getComputedStyle(finalBoard).display !== 'none' &&
