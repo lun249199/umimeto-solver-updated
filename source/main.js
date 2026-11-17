@@ -1638,15 +1638,36 @@ if (window.$) {
   }
 
   function answer_roboti () {
-    let correct_answer = -1;
     try {
-      correct_answer = questions[questionOffset].options[1].correct;
-      console.log('Correct answer: ' + parseInt(correct_answer));
-      document.getElementById('option' + correct_answer).click();
-      if (finished == 1) {
-        document.getElementById('next').click();
+      // Capture the exact item passed to the game's display function.
+      if (!window.__robotDisplayHookInstalled) {
+        if (typeof window.displayItem !== 'function') return;
+        const originalDisplayItem = window.displayItem;
+        window.displayItem = function (item, ...args) {
+          window.__robotCurrentItem = item;
+          return originalDisplayItem.apply(this, [item, ...args]);
+        };
+        window.__robotDisplayHookInstalled = true;
       }
-    } catch (error) {}
+
+      const item = window.__robotCurrentItem;
+      if (!item || item === window.__robotLastAnsweredItem || !Array.isArray(item.options)) return;
+
+      const correctIndex = item.options.findIndex(option => Number(option.correct) === 1);
+      if (correctIndex < 0) return;
+
+      const option = document.querySelector(
+        '#question-wrapper [data-data="option"][data-index="' + correctIndex + '"]'
+      );
+      if (!option || !option.isConnected || option.getClientRects().length === 0) return;
+
+      // Mark before clicking because the click can synchronously trigger game logic.
+      window.__robotLastAnsweredItem = item;
+      console.log('[umimeto-solver] Roboti answer:', item.id, correctIndex);
+      option.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Roboti:', error);
+    }
   }
 
   function answer_mluvene_diktaty () {
