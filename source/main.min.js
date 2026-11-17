@@ -1756,23 +1756,107 @@ if (window.$) {
     }
   }
 
-  function answer_krok_po_kroku () {
-    let correct_answer = -1;
+  async function answer_krok_po_kroku () {
+    if (window.krokPoKrokuBusy) return;
+
+    const pageId = window.location.pathname.split('/')[2];
+    const cards = [...document.querySelectorAll('#cards [id^="option"]')]
+      .filter(element => element.getClientRects().length > 0)
+      .sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+    const nextButton = document.querySelector('#questionParent .next');
+    if (!pageId) return;
+
+    window.krokPoKrokuBusy = true;
     try {
-      if (finished == '1') {
-        nextQuestion();
-      } else {
-        if (document.getElementById('option0').attributes.correct.value === '1') {
-          correct_answer = 0;
-        } else if (document.getElementById('option1').attributes.correct.value === '1') {
-          correct_answer = 1;
+      if (!window.krokPoKrokuDataPromise) {
+        if (typeof window.fjWEDGjivdsXloadQuestionData !== 'function') {
+          console.warn('[umimeto-solver] Krok po kroku: question loader unavailable.');
+          return;
         }
-        console.log('Correct answer: ' + parseInt(correct_answer + 1));
-        document.getElementById('option' + correct_answer).click();
-        document.getElementById('option0').scrollIntoView();
-        window.scrollBy(0, -70);
+        window.krokPoKrokuDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('universalLoadMedalPs.php');
       }
-    } catch (error) {}
+
+      const data = await window.krokPoKrokuDataPromise;
+      const item = (data?.items || []).find(entry => String(entry.id) === pageId);
+      if (!item || !Array.isArray(item.question)) {
+        console.warn('[umimeto-solver] Krok po kroku: item not found:', pageId);
+        return;
+      }
+
+      if (!window.krokPoKrokuState || window.krokPoKrokuState.itemId !== pageId) {
+        window.krokPoKrokuState = {
+          itemId: pageId,
+          optionGroups: item.question.filter(entry => entry?.type === 'options'),
+          index: 0,
+          pendingSignature: null,
+          nextClicked: false
+        };
+      }
+      const state = window.krokPoKrokuState;
+
+      // The exercise's own button advances from one complete word to the next.
+      if (nextButton && getComputedStyle(nextButton).display !== 'none' &&
+          !state.nextClicked) {
+        state.nextClicked = true;
+        console.log('[umimeto-solver] Krok po kroku: next word', pageId);
+        nextButton.click();
+        return;
+      }
+
+      if (cards.length < 2 || state.index >= state.optionGroups.length) return;
+
+      const questionElement = document.getElementById('question');
+      const signature = (questionElement?.innerText || '') + '|' +
+        cards.map(card => card.innerText.trim()).join('|');
+
+      // A correct selection advances to the next chat/options step after an animation.
+      if (state.pendingSignature !== null) {
+        if (signature === state.pendingSignature) return;
+        state.index++;
+        state.pendingSignature = null;
+        if (state.index >= state.optionGroups.length) return;
+      }
+
+      const group = state.optionGroups[state.index];
+      const normalize = value => String(value ?? '')
+        .normalize('NFC')
+        .replace(/\\s+/g, ' ')
+        .trim()
+        .toLocaleLowerCase();
+
+      const optionText = option => (option.option || [])
+        .map(part => Array.isArray(part) ? String(part[1] ?? '') : '')
+        .join('');
+      const correctOption = group.options?.find(option => String(option.correct) === '1');
+      if (!correctOption) {
+        console.warn('[umimeto-solver] Krok po kroku: correct option missing:', pageId, state.index);
+        return;
+      }
+
+      const correctText = normalize(optionText(correctOption));
+      const correctCard = cards.find(card => normalize(card.innerText) === correctText);
+      if (!correctCard) {
+        console.warn('[umimeto-solver] Krok po kroku: could not match correct option:', {
+          pageId,
+          step: state.index,
+          correctText,
+          visibleOptions: cards.map(card => card.innerText.trim())
+        });
+        return;
+      }
+
+      state.pendingSignature = signature;
+      console.log('[umimeto-solver] Krok po kroku answer:', pageId, state.index + 1, correctCard.innerText.trim());
+      correctCard.click();
+      correctCard.scrollIntoView({ block: 'center' });
+      window.scrollBy(0, -70);
+    } catch (error) {
+      console.error('[umimeto-solver] Krok po kroku:', error);
+      window.krokPoKrokuDataPromise = null;
+    } finally {
+      window.krokPoKrokuBusy = false;
+    }
   }
 
   function answer_rozbory () {
