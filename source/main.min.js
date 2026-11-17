@@ -1257,12 +1257,107 @@ if (window.$) {
     }
   }
 
-  function answer_pexeso () {
-    const correct_answer = '';
+  async function answer_pexeso () {
+    if (window.__pexesoBusy) return;
+
+    const board = document.getElementById('pexeso');
+    if (!board) return;
+
+    const nextButton = [...document.querySelectorAll('#playground .next, .next')]
+      .find(button => getComputedStyle(button).display !== 'none' &&
+        getComputedStyle(button).visibility !== 'hidden');
+
+    const pageId = window.location.pathname.split('/').filter(Boolean).pop();
+    if (!pageId) return;
+
+    // Once all pairs are matched, the site's own Next button starts the next set.
+    if (nextButton && window.__pexesoAnsweredSet === pageId) {
+      nextButton.click();
+      console.log('[umimeto-solver] Pexeso: next set', pageId);
+      return;
+    }
+
+    const cards = [...board.querySelectorAll('.card[data-index]')];
+    if (!cards.length || window.__pexesoAnsweredSet === pageId) return;
+
+    window.__pexesoBusy = true;
     try {
-      evaluate(1);
-      nextSet();
-    } catch (error) {}
+      if (!window.__pexesoSetsPromise) {
+        if (typeof window.fjWEDGjivdsXloadQuestionData !== 'function') {
+          console.warn('[umimeto-solver] Pexeso: question loader unavailable.');
+          return;
+        }
+        window.__pexesoSetsPromise =
+          window.fjWEDGjivdsXloadQuestionData('pexesoLoadSetsDynamic.php');
+      }
+
+      const data = await window.__pexesoSetsPromise;
+      const set = (data?.sets || []).find(entry => String(entry.id) === pageId);
+      if (!set || !Array.isArray(set.options)) {
+        console.warn('[umimeto-solver] Pexeso: matching set not found:', pageId);
+        return;
+      }
+
+      const normalize = value => String(value ?? '')
+        .normalize('NFKC')
+        .replace(/\\s+/g, ' ')
+        .trim()
+        .toLocaleLowerCase('cs');
+
+      // The game pairs original options (0,1), (2,3), etc., then shuffles
+      // the cards while preserving each option's pair number.
+      const optionText = option => (option || [])
+        .map(part => Array.isArray(part) && part[0] === 'text' ? String(part[1] ?? '') : '')
+        .join('');
+
+      const optionBuckets = new Map();
+      set.options.forEach((option, index) => {
+        const key = normalize(optionText(option));
+        if (!key) return;
+        if (!optionBuckets.has(key)) optionBuckets.set(key, []);
+        optionBuckets.get(key).push(index);
+      });
+
+      const matchedCards = new Map();
+      for (const card of cards) {
+        const key = normalize(card.innerText);
+        const bucket = optionBuckets.get(key);
+        if (!bucket?.length) {
+          console.warn('[umimeto-solver] Pexeso: card not found in API options:', card.innerText);
+          return;
+        }
+        const optionIndex = bucket.shift();
+        const pair = Math.floor(optionIndex / 2);
+        if (!matchedCards.has(pair)) matchedCards.set(pair, []);
+        matchedCards.get(pair).push(card);
+      }
+
+      const pairs = [...matchedCards.entries()];
+      if (pairs.length !== set.options.length / 2 ||
+          pairs.some(([, pairCards]) => pairCards.length !== 2)) {
+        console.warn('[umimeto-solver] Pexeso: incomplete pair mapping:', {
+          set: pageId, expectedPairs: set.options.length / 2,
+          actualPairs: pairs.length
+        });
+        return;
+      }
+
+      // Do not repeat clicks if the board has already started resolving.
+      if (cards.some(card => card.classList.contains('selected') ||
+          card.classList.contains('correct') || card.classList.contains('wrong'))) return;
+
+      window.__pexesoAnsweredSet = pageId;
+      console.log('[umimeto-solver] Pexeso: matching pairs', pageId, pairs.length);
+      for (const [, pairCards] of pairs) {
+        pairCards[0].click();
+        pairCards[1].click();
+      }
+    } catch (error) {
+      console.error('[umimeto-solver] Pexeso:', error);
+      window.__pexesoSetsPromise = null;
+    } finally {
+      window.__pexesoBusy = false;
+    }
   }
 
   async function answer_otazky () {
