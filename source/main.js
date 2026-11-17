@@ -1788,15 +1788,13 @@ if (window.$) {
         window.krokPoKrokuState = {
           itemId: pageId,
           optionGroups: item.question.filter(entry => entry?.type === 'options'),
-          index: 0,
-          pendingSignature: null,
-          pendingGroupIndex: null,
+          usedGroups: [],
+          pendingOptions: null,
           nextClicked: false
         };
       }
       const state = window.krokPoKrokuState;
 
-      // The exercise's own button advances from one complete word to the next.
       if (nextButton && getComputedStyle(nextButton).display !== 'none' &&
           !state.nextClicked) {
         state.nextClicked = true;
@@ -1807,43 +1805,37 @@ if (window.$) {
 
       if (cards.length < 2) return;
 
-      const questionElement = document.getElementById('question');
-      const signature = (questionElement?.innerText || '') + '|' +
-        cards.map(card => card.innerText.trim()).join('|');
-
-      // Wait for the chat UI to advance before matching the next option group.
-      if (state.pendingSignature !== null) {
-        if (signature === state.pendingSignature) return;
-        state.index = (state.pendingGroupIndex ?? state.index) + 1;
-        state.pendingSignature = null;
-        state.pendingGroupIndex = null;
-      }
-
       const normalize = value => String(value ?? '')
         .normalize('NFC')
-        .replace(/\\s+/g, ' ')
+        .replace(/\s+/g, ' ')
         .trim()
         .toLocaleLowerCase();
       const optionText = option => (option.option || [])
         .map(part => Array.isArray(part) ? String(part[1] ?? '') : '')
         .join('');
       const visibleTexts = cards.map(card => normalize(card.innerText));
+      const visibleSignature = [...visibleTexts].sort().join('|');
+
+      // Wait for the actual choices to change. The chat text can change earlier,
+      // while the previous pair of cards is still on screen.
+      if (state.pendingOptions !== null) {
+        if (visibleSignature === state.pendingOptions) return;
+        state.pendingOptions = null;
+      }
+
+      // Match the displayed pair against every unused data group. The page can
+      // show the next choices before its chat animation has fully completed.
       const matchingGroups = state.optionGroups
         .map((group, index) => ({ group, index }))
-        .filter(({ group, index }) => index >= state.index &&
+        .filter(({ group, index }) => !state.usedGroups.includes(index) &&
           Array.isArray(group.options) &&
           group.options.length === visibleTexts.length &&
-          visibleTexts.every(text => group.options.some(option =>
-            normalize(optionText(option)) === text
-          )));
+          [...group.options.map(option => normalize(optionText(option)))].sort().join('|') ===
+            visibleSignature);
 
       const match = matchingGroups[0];
       if (!match) {
-        console.warn('[umimeto-solver] Krok po kroku: could not match visible options to question data:', {
-          pageId,
-          step: state.index,
-          visibleOptions: cards.map(card => card.innerText.trim())
-        });
+        // No warning during transitions or after all option groups are consumed.
         return;
       }
 
@@ -1857,8 +1849,8 @@ if (window.$) {
       const correctCard = cards.find(card => normalize(card.innerText) === correctText);
       if (!correctCard) return;
 
-      state.pendingSignature = signature;
-      state.pendingGroupIndex = match.index;
+      state.usedGroups.push(match.index);
+      state.pendingOptions = visibleSignature;
       console.log('[umimeto-solver] Krok po kroku answer:', pageId, match.index + 1, correctCard.innerText.trim());
       correctCard.click();
       correctCard.scrollIntoView({ block: 'center' });
