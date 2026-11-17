@@ -1645,6 +1645,7 @@ if (window.$) {
         const originalDisplayItem = window.displayItem;
         window.displayItem = function (item, ...args) {
           window.__robotCurrentItem = item;
+          window.__robotLastAnsweredItem = null;
           return originalDisplayItem.apply(this, [item, ...args]);
         };
         window.__robotDisplayHookInstalled = true;
