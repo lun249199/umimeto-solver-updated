@@ -2390,7 +2390,7 @@ if (window.$) {
     if (words.length < 2) return;
 
     const normalize = value => String(value ?? '')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim();
 
     // Choose the newest captured response whose indexed terms correspond
