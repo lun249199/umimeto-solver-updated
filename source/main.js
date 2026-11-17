@@ -793,7 +793,7 @@ if (window.$) {
 
       // The endpoint returns randomized batches. Retry fresh requests
       // until this question's page ID appears, rather than stopping after one.
-      for (let attempt = 0; !byId.length && attempt < 3; attempt++) {
+      for (let attempt = 0; !byId.length && attempt < 10; attempt++) {
         data = await window.fjWEDGjivdsXloadQuestionData(
           'doplnovackaLoadQuestionsBinaryChoiceData.php'
         );
