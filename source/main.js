@@ -767,7 +767,7 @@ if (window.$) {
     const questionElement = document.querySelector('.question-content');
     const cards = [...document.querySelectorAll('.options .card')];
     if (!questionElement || !cards.length) return;
-    const normalize = value => String(value ?? '').replace(/[^\\p{L}\\p{N}]/gu, '').toLowerCase();
+    const normalize = value => String(value ?? '').replace(/[^\p{L}\p{N}]/gu, '').toLowerCase();
     const extractText = value => {
       if (Array.isArray(value)) {
         if (value[0] === 'text' && typeof value[1] === 'string') return value[1];
@@ -787,8 +787,9 @@ if (window.$) {
       }
       const data = await window.doplnovackaDataPromise;
       const items = data.items || [];
-      const pageId = location.pathname.match(/\\/(\\d+)\\/?$/)?.[1];
-      const byId = pageId ? items.filter(item => String(item.id) === pageId) : [];
+      const pathParts = location.pathname.split('/').filter(Boolean);
+      const pageId = pathParts[pathParts.length - 1] || '';
+      const byId = items.filter(item => String(item.id) === pageId);
       let matches = byId.length === 1 ? byId : items.filter(item =>
         normalize(extractText(item.question)) === visible
       );
@@ -797,7 +798,7 @@ if (window.$) {
         item.options.every((option, index) => normalize(extractText(option.option)) === actual[index]));
       if (matches.length !== 1) {
         console.warn('[umimeto-solver] Expected one question match, found:', matches.length, {
-          pageId, prompt: visible, options: actual
+          pageId, idMatches: byId.length, prompt: visible, options: actual
         });
         return;
       }
@@ -817,6 +818,7 @@ if (window.$) {
       window.doplnovackaBusy = false;
     }
   }
+
   function answer_twoOp () {
     let correct_answer = -1;
     try {
