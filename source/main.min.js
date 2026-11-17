@@ -1686,29 +1686,59 @@ if (window.$) {
   }
 
   function answer_mluvene_diktaty () {
-    const correct_answer = -1;
     try {
-      window.setInterval(function () {
-        try {
-          if (document.getElementsByClassName('audio')[0].childNodes[0]) {
-            document.getElementsByClassName('audio')[0].childNodes[0].remove();
-          } else if (document.getElementsByClassName('audio')[1].childNodes[0]) {
-            document.getElementsByClassName('audio')[1].childNodes[0].remove();
-          }
-        } catch (error) {}
-      }, 1);
+      const input = document.getElementById('sentence');
+      const evaluate = document.getElementById('evaluate');
+      const next = document.getElementById('nextSentence');
+      const finalBoard = document.getElementById('finalBoard');
+      const startButton = document.getElementById('startTyping');
 
-      if (document.getElementsByClassName('tlacitko large primary nextItem').length > 0) {
-        document.getElementsByClassName('tlacitko large primary nextItem')[0].click();
-      } else if (document.getElementById('finalBoard').style.display != 'none') {
-        document.getElementById('startTyping').click();
-      } else {
-        console.log('Correct answer: ' + window.sentence);
-        document.getElementById('sentence').value = window.sentence;
-        document.getElementById('evaluate').click();
-        document.getElementById('nextSentence').click();
+      // Start the writing part when the introductory board is displayed.
+      if (input && startButton && finalBoard &&
+          getComputedStyle(finalBoard).display !== 'none' &&
+          getComputedStyle(startButton).display !== 'none') {
+        startButton.click();
+        return;
       }
-    } catch (error) {}
+
+      if (!input || !evaluate || !next) return;
+
+      const offset = typeof sentenceOffset !== 'undefined'
+        ? sentenceOffset
+        : (window.sentenceOffset ?? 0);
+      const finished = typeof sentenceFinished !== 'undefined'
+        ? sentenceFinished
+        : window.sentenceFinished;
+
+      // Once checked, wait for the site's own "Další" button and advance.
+      if (Number(finished) === 1 &&
+          getComputedStyle(next).display !== 'none') {
+        if (window.__mluveneNextOffset !== offset ||
+            Date.now() - (window.__mluveneNextAttemptAt || 0) > 2500) {
+          window.__mluveneNextOffset = offset;
+          window.__mluveneNextAttemptAt = Date.now();
+          console.log('[umimeto-solver] Mluvené diktáty: next sentence', offset);
+          next.click();
+        }
+        return;
+      }
+
+      const answer = typeof sentence !== 'undefined' ? sentence : window.sentence;
+      if (typeof answer !== 'string' || !answer.trim() ||
+          Number(finished) === 1 ||
+          getComputedStyle(evaluate).display === 'none') return;
+
+      if (window.__mluveneSubmittedOffset === offset) return;
+
+      input.value = answer;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      window.__mluveneSubmittedOffset = offset;
+      console.log('[umimeto-solver] Mluvené diktáty answer:', answer);
+      evaluate.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Mluvené diktáty:', error);
+    }
   }
 
   function answer_krok_po_kroku () {
