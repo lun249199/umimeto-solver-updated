@@ -908,7 +908,7 @@ if (window.$) {
 
     const normalize = value => String(value ?? '')
       .normalize('NFKC')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim()
       .toLocaleLowerCase('cs');
 
@@ -1000,7 +1000,7 @@ if (window.$) {
 
     const normalize = value => String(value ?? '')
       .normalize('NFKC')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim()
       .toLocaleLowerCase('cs');
 
