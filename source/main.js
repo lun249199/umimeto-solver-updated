@@ -2325,6 +2325,46 @@ if (window.$) {
     }
   }
 
+  async function answer_strilecka () {
+    const plan = document.getElementById('plan');
+    if (!plan || typeof window.fjWEDGjivdsXloadQuestionData !== 'function') return;
+
+    // Watch for each new word as soon as the game adds it.
+    if (!window.__strileckaObserver) {
+      window.__strileckaObserver = new MutationObserver(() => {
+        answer_strilecka();
+      });
+      window.__strileckaObserver.observe(plan, { childList: true, subtree: true });
+    }
+
+    const currentLevel = typeof level !== 'undefined' ? Number(level) : 1;
+    if (window.__strileckaLoadedLevel !== currentLevel) {
+      window.__strileckaLoadedLevel = currentLevel;
+      window.__strileckaAnsweredLevel = currentLevel;
+      window.__strileckaDataPromise =
+        window.fjWEDGjivdsXloadQuestionData('loadStrilecka.php');
+    }
+
+    try {
+      const data = await window.__strileckaDataPromise;
+      if ((typeof level !== 'undefined' ? Number(level) : 1) !== currentLevel) return;
+
+      for (const word of plan.querySelectorAll('.word[data-index]')) {
+        const index = Number(word.dataset.index);
+        if (data.items?.[index]?.correct === 1 &&
+            !word.classList.contains('correct') &&
+            !word.classList.contains('wrong')) {
+          word.click();
+          console.log('[umimeto-solver] Střílečka: shot word', index);
+        }
+      }
+    } catch (error) {
+      console.error('[umimeto-solver] Střílečka:', error);
+      window.__strileckaDataPromise = null;
+      window.__strileckaLoadedLevel = null;
+    }
+  }
+
   async function answer_vtipy () {
     if (window.__vtipyBusy) return;
     const joke = document.getElementById('joke');
@@ -2608,6 +2648,12 @@ if (window.$) {
       window.sstop_timer.start(function () {
         answer_vpisovacka();
       }, 1500);
+    } else if (window.location.pathname.includes('/strilecka')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_strilecka();
+      window.sstop_timer.start(function () {
+        answer_strilecka();
+      }, 500);
     } else if (window.location.pathname.includes('/vtipy')) {
       console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
       answer_vtipy();
