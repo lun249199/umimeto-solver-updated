@@ -791,10 +791,9 @@ if (window.$) {
       const pageId = pathParts[pathParts.length - 1] || '';
       let byId = items.filter(item => String(item.id) === pageId);
 
-      // The endpoint returns randomized batches. Refresh once for each
-      // question when the cached batch does not contain its page ID.
-      if (!byId.length && window.doplnovackaRefreshSignature !== signature) {
-        window.doplnovackaRefreshSignature = signature;
+      // The endpoint returns randomized batches. Retry fresh requests
+      // until this question's page ID appears, rather than stopping after one.
+      for (let attempt = 0; !byId.length && attempt < 3; attempt++) {
         data = await window.fjWEDGjivdsXloadQuestionData(
           'doplnovackaLoadQuestionsBinaryChoiceData.php'
         );
