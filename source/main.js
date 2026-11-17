@@ -790,12 +790,23 @@ if (window.$) {
       const pathParts = location.pathname.split('/').filter(Boolean);
       const pageId = pathParts[pathParts.length - 1] || '';
       const byId = items.filter(item => String(item.id) === pageId);
+      const optionsMatch = item => Array.isArray(item.options) &&
+        item.options.length === actual.length &&
+        item.options.every((option, index) => normalize(extractText(option.option)) === actual[index]);
       let matches = byId.length === 1 ? byId : items.filter(item =>
         normalize(extractText(item.question)) === visible
       );
-      matches = matches.filter(item => Array.isArray(item.options) &&
-        item.options.length === actual.length &&
-        item.options.every((option, index) => normalize(extractText(option.option)) === actual[index]));
+      matches = matches.filter(optionsMatch);
+      if (!matches.length) {
+        const gap = questionElement.querySelector('.gap');
+        const gapPrefix = normalize(gap?.previousSibling?.textContent || '');
+        if (gapPrefix.length >= 3) {
+          const stemMatches = items.filter(item =>
+            normalize(extractText(item.question)).includes(gapPrefix) && optionsMatch(item)
+          );
+          if (stemMatches.length === 1) matches = stemMatches;
+        }
+      }
       if (matches.length !== 1) {
         console.warn('[umimeto-solver] Expected one question match, found:', matches.length, {
           pageId, idMatches: byId.length, prompt: visible, options: actual
