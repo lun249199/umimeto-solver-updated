@@ -2272,7 +2272,7 @@ if (window.$) {
 
       const normalize = value => String(value ?? '')
         .normalize('NFKC')
-        .replace(/\\s+/g, ' ')
+        .replace(/\s+/g, ' ')
         .trim()
         .toLocaleLowerCase('cs');
 
@@ -2289,7 +2289,7 @@ if (window.$) {
         if (correctWord == null) continue;
 
         const word = words.find(element =>
-          !usedWords.has(element) && normalize(element.textContent) === normalize(correctWord)
+          !usedWords.has(element) && normalize(element.getAttribute('word')) === normalize(correctWord)
         );
         if (!word) {
           console.warn('[umimeto-solver] Slova ve větách: answer card not found', correctWord);
