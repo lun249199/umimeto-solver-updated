@@ -964,7 +964,7 @@ if (window.$) {
 
     const normalize = value => String(value ?? '')
       .normalize('NFKC')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim()
       .toLocaleLowerCase('cs');
 
@@ -1083,7 +1083,7 @@ if (window.$) {
       // records. Index both directions so either UI orientation can be solved.
       const normalizeLoose = value => normalize(value)
         .normalize('NFD')
-        .replace(/[\\u0300-\\u036f]/g, '');
+        .replace(/[\u0300-\u036f]/g, '');
       const findCategoryMatches = () => {
         const categoriesByTerm = new Map();
         for (const record of records) {
@@ -1101,7 +1101,7 @@ if (window.$) {
         // Also tolerate missing diacritics and parenthetical synonyms.
         const promptVariants = [
           normalizeLoose(prompt),
-          normalizeLoose(prompt.replace(/\\s*\\([^)]*\\)\\s*/g, ' ').trim())
+          normalizeLoose(prompt.replace(/\s*\([^)]*\)\s*/g, ' ').trim())
         ];
         const promptCategories = new Set();
         for (const variant of promptVariants) {
