@@ -798,7 +798,7 @@ if (window.$) {
       );
       matches = matches.filter(optionsMatch);
       if (!matches.length) {
-        const gap = questionElement.querySelector('.gap');
+        const gap = document.querySelector('.question-content .gap');
         const gapPrefix = normalize(gap?.previousSibling?.textContent || '');
         if (gapPrefix.length >= 3) {
           const stemMatches = items.filter(item =>
