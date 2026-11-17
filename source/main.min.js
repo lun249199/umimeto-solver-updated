@@ -1790,6 +1790,7 @@ if (window.$) {
           optionGroups: item.question.filter(entry => entry?.type === 'options'),
           index: 0,
           pendingSignature: null,
+          pendingGroupIndex: null,
           nextClicked: false
         };
       }
@@ -1804,50 +1805,61 @@ if (window.$) {
         return;
       }
 
-      if (cards.length < 2 || state.index >= state.optionGroups.length) return;
+      if (cards.length < 2) return;
 
       const questionElement = document.getElementById('question');
       const signature = (questionElement?.innerText || '') + '|' +
         cards.map(card => card.innerText.trim()).join('|');
 
-      // A correct selection advances to the next chat/options step after an animation.
+      // Wait for the chat UI to advance before matching the next option group.
       if (state.pendingSignature !== null) {
         if (signature === state.pendingSignature) return;
-        state.index++;
+        state.index = (state.pendingGroupIndex ?? state.index) + 1;
         state.pendingSignature = null;
-        if (state.index >= state.optionGroups.length) return;
+        state.pendingGroupIndex = null;
       }
 
-      const group = state.optionGroups[state.index];
       const normalize = value => String(value ?? '')
         .normalize('NFC')
         .replace(/\\s+/g, ' ')
         .trim()
         .toLocaleLowerCase();
-
       const optionText = option => (option.option || [])
         .map(part => Array.isArray(part) ? String(part[1] ?? '') : '')
         .join('');
-      const correctOption = group.options?.find(option => String(option.correct) === '1');
-      if (!correctOption) {
-        console.warn('[umimeto-solver] Krok po kroku: correct option missing:', pageId, state.index);
-        return;
-      }
+      const visibleTexts = cards.map(card => normalize(card.innerText));
+      const matchingGroups = state.optionGroups
+        .map((group, index) => ({ group, index }))
+        .filter(({ group, index }) => index >= state.index &&
+          Array.isArray(group.options) &&
+          group.options.length === visibleTexts.length &&
+          visibleTexts.every(text => group.options.some(option =>
+            normalize(optionText(option)) === text
+          )));
 
-      const correctText = normalize(optionText(correctOption));
-      const correctCard = cards.find(card => normalize(card.innerText) === correctText);
-      if (!correctCard) {
-        console.warn('[umimeto-solver] Krok po kroku: could not match correct option:', {
+      const match = matchingGroups[0];
+      if (!match) {
+        console.warn('[umimeto-solver] Krok po kroku: could not match visible options to question data:', {
           pageId,
           step: state.index,
-          correctText,
           visibleOptions: cards.map(card => card.innerText.trim())
         });
         return;
       }
 
+      const correctOption = match.group.options.find(option => String(option.correct) === '1');
+      if (!correctOption) {
+        console.warn('[umimeto-solver] Krok po kroku: correct option missing:', pageId, match.index);
+        return;
+      }
+
+      const correctText = normalize(optionText(correctOption));
+      const correctCard = cards.find(card => normalize(card.innerText) === correctText);
+      if (!correctCard) return;
+
       state.pendingSignature = signature;
-      console.log('[umimeto-solver] Krok po kroku answer:', pageId, state.index + 1, correctCard.innerText.trim());
+      state.pendingGroupIndex = match.index;
+      console.log('[umimeto-solver] Krok po kroku answer:', pageId, match.index + 1, correctCard.innerText.trim());
       correctCard.click();
       correctCard.scrollIntoView({ block: 'center' });
       window.scrollBy(0, -70);
