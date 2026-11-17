@@ -2466,7 +2466,7 @@ if (window.$) {
           console.warn('[umimeto-solver] Legacy question loader unavailable:', e);
         });
     }
-    if (ulr_ex_type.includes('doplnovani-slov')) {
+    if (ulr_ex_type.includes('doplnovani-slov') && !document.getElementById('multi-lines-table')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
       answer_doplnovani_slov();
       window.sstop_timer.start(function () {
