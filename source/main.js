@@ -2197,7 +2197,8 @@ if (window.$) {
           correctOption.innerText.trim());
       // Click the site's option element; its own handler records the answer
       // and advances automatically or reveals the explanation/Next button.
-      correctOption.click();
+      const answerCard = correctOption.querySelector('.card') || correctOption;
+      answerCard.click();
     } catch (error) {
       console.error('[umimeto-solver] Čtení:', error);
       window.__cteniDataPromise = null;
