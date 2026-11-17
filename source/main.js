@@ -764,55 +764,49 @@ if (window.$) {
 
   async function answer_doplnovacka () {
     if (window.doplnovackaBusy) return;
-
     const questionElement = document.querySelector('.question-content');
     const cards = [...document.querySelectorAll('.options .card')];
     if (!questionElement || !cards.length) return;
-
-    const normalize = value => value
-      .replace(/[^\p{L}\p{N}]/gu, '')
-      .toLowerCase();
-
+    const normalize = value => String(value ?? '').replace(/[^\\p{L}\\p{N}]/gu, '').toLowerCase();
+    const extractText = value => {
+      if (Array.isArray(value)) {
+        if (value[0] === 'text' && typeof value[1] === 'string') return value[1];
+        return value.map(extractText).join('');
+      }
+      return typeof value === 'string' ? value : '';
+    };
     const visible = normalize(questionElement.innerText || '');
-    const signature = visible + '|' + cards.map(card => normalize(card.innerText)).join('|');
-    if (!visible || (signature === window.doplnovackaLastSignature && cards.some(card => card.classList.contains('correct') || card.classList.contains('wrong')))) return;
-
+    const actual = cards.map(card => normalize(card.innerText));
+    const signature = visible + '|' + actual.join('|');
+    if (!visible || (signature === window.doplnovackaLastSignature &&
+        cards.some(card => card.classList.contains('correct') || card.classList.contains('wrong')))) return;
     window.doplnovackaBusy = true;
     try {
       if (!window.doplnovackaDataPromise) {
-        window.doplnovackaDataPromise =
-          window.fjWEDGjivdsXloadQuestionData('doplnovackaLoadQuestionsBinaryChoiceData.php');
+        window.doplnovackaDataPromise = window.fjWEDGjivdsXloadQuestionData('doplnovackaLoadQuestionsBinaryChoiceData.php');
       }
-
       const data = await window.doplnovackaDataPromise;
-      const extractText = value => {
-        if (Array.isArray(value)) {
-          if (value[0] === 'text' && typeof value[1] === 'string') return value[1];
-          return value.map(extractText).join('');
-        }
-        return typeof value === 'string' ? value : '';
-      };
-
-      const matches = (data.items || []).filter(item =>
+      const items = data.items || [];
+      const pageId = location.pathname.match(/\\/(\\d+)\\/?$/)?.[1];
+      const byId = pageId ? items.filter(item => String(item.id) === pageId) : [];
+      let matches = byId.length === 1 ? byId : items.filter(item =>
         normalize(extractText(item.question)) === visible
       );
-
+      matches = matches.filter(item => Array.isArray(item.options) &&
+        item.options.length === actual.length &&
+        item.options.every((option, index) => normalize(extractText(option.option)) === actual[index]));
       if (matches.length !== 1) {
-        console.warn('[umimeto-solver] Expected one question match, found:', matches.length);
+        console.warn('[umimeto-solver] Expected one question match, found:', matches.length, {
+          pageId, prompt: visible, options: actual
+        });
         return;
       }
-
       const item = matches[0];
-      const expected = item.options.map(option => normalize(extractText(option.option)));
-      const actual = cards.map(card => normalize(card.innerText));
       const correctIndex = item.options.findIndex(option => Number(option.correct) === 1);
-
-      if (correctIndex < 0 || expected.length !== actual.length ||
-          expected.some((value, index) => value !== actual[index])) {
-        console.warn('[umimeto-solver] Answer validation failed:', { expected, actual });
+      if (correctIndex < 0) {
+        console.warn('[umimeto-solver] No correct option found:', item.id);
         return;
       }
-
       window.doplnovackaLastSignature = signature;
       console.log('[umimeto-solver] Correct answer:', extractText(item.options[correctIndex].option));
       cards[correctIndex].click();
@@ -823,7 +817,6 @@ if (window.$) {
       window.doplnovackaBusy = false;
     }
   }
-
   function answer_twoOp () {
     let correct_answer = -1;
     try {
