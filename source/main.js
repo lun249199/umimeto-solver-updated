@@ -1973,27 +1973,91 @@ if (window.$) {
     }
   }
 
-  function answer_carky () {
-    const correct_answer = -1;
+  async function answer_carky () {
+    if (window.__carkyBusy) return;
+
+    const evaluateButton = document.getElementById('evaluate');
+    const nextButton = document.getElementById('next');
+    const questionContent = document.getElementById('question-content');
+    const pageId = window.location.pathname.split('/').filter(Boolean).pop();
+
+    if (!pageId || !evaluateButton || !questionContent) return;
+
+    window.__carkyBusy = true;
     try {
-      gaps = [];
-      for (i of range(1000)) {
-        if (document.getElementById('gap' + i)) {
-          gaps.push(document.getElementById('gap' + i));
+      // The exercise updates the final URL segment to the current item's ID.
+      if (!window.__carkyDataPromise) {
+        if (typeof window.fjWEDGjivdsXloadQuestionData !== 'function') {
+          console.warn('[umimeto-solver] Čárky: question loader unavailable.');
+          return;
         }
+        window.__carkyDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('universalLoadMedalPs.php');
       }
 
-      for (gap of gaps) {
-        if (gap.attributes.correct.value == '1') {
-          gap.click();
-        }
+      const data = await window.__carkyDataPromise;
+      const item = (data?.items || []).find(entry => String(entry.id) === pageId);
+      if (!item || item.type !== 'text' || item.areas !== 'commas') {
+        console.warn('[umimeto-solver] Čárky: matching comma item not found:', pageId);
+        return;
       }
 
-      document.getElementById('evaluate').click();
-      setTimeout(function () {
-        nextSentence();
-      }, 200);
-    } catch (error) {}
+      // Once evaluated, use the exercise's own Next button.
+      if (nextButton && getComputedStyle(nextButton).display !== 'none' &&
+          getComputedStyle(nextButton).visibility !== 'hidden') {
+        if (window.__carkyNextClickedFor !== pageId) {
+          window.__carkyNextClickedFor = pageId;
+          console.log('[umimeto-solver] Čárky: next question', pageId);
+          nextButton.click();
+        }
+        return;
+      }
+
+      if (window.__carkyAnsweredId === pageId) return;
+
+      // Reproduce createTextPlugin().prepareCommas() exactly: each optional
+      // comma-plus-space boundary receives one selectable-area index.
+      const correctIndices = new Set();
+      let index = 0;
+      const preparedContent = item.content
+        .replace(/\s+/g, ' ')
+        .replace(/ ?((<[^>]*> ?)+) /g, (match, html) => ` ${html.replace(/> </g, '><')}`)
+        .split(/((?:<[^>]*>)+)/g);
+
+      preparedContent.forEach(chunk => {
+        if (chunk.startsWith('<') && chunk.endsWith('>')) return;
+        chunk.replace(/,? /g, match => {
+          if (match.startsWith(',')) correctIndices.add(index);
+          index++;
+          return match;
+        });
+      });
+
+      const areas = [...questionContent.querySelectorAll('.selectable-area')]
+        .sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+
+      if (areas.length !== index) {
+        console.warn('[umimeto-solver] Čárky: area count mismatch', {
+          item: pageId, expected: index, actual: areas.length
+        });
+        return;
+      }
+
+      correctIndices.forEach(correctIndex => {
+        const area = areas.find(element => Number(element.dataset.index) === correctIndex);
+        if (area && !area.classList.contains('selected')) area.click();
+      });
+
+      window.__carkyAnsweredId = pageId;
+      console.log('[umimeto-solver] Čárky answer:', pageId,
+        [...correctIndices], '/', areas.length);
+      evaluateButton.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Čárky:', error);
+      window.__carkyDataPromise = null;
+    } finally {
+      window.__carkyBusy = false;
+    }
   }
 
   function answer_zavody_v_psani () {
@@ -2192,7 +2256,10 @@ if (window.$) {
       window.sstop_timer.start(function () {
         answer_presouvani();
       }, 1500);
-    } else if (window.location.href.includes('/psani-carek') || window.location.href.includes('/carky') || window.location.href.includes('/carek')) {
+    } else if (window.location.href.includes('/psani-carek') ||
+               window.location.href.includes('/carky') ||
+               window.location.href.includes('/carek') ||
+               new URLSearchParams(window.location.search).get('topic') === 'cviceni-carky') {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
       // run for the first time
       answer_carky();
