@@ -924,7 +924,8 @@ if (window.$) {
     try {
       if (!window.raceSolverDataPromise) {
         window.raceSolverDataPromise = (async () => {
-          const response = await fetch(`${newApiUrl}/exercise/zavody/${gameId}/questions`);
+          const exerciseType = new URLSearchParams(window.location.search).get('p') === 'tymovka' ? 'tymovka' : 'zavody';
+          const response = await fetch(`${newApiUrl}/exercise/${exerciseType}/${gameId}/questions`);
           if (!response.ok) throw new Error(`Question request failed: ${response.status}`);
           const encrypted = await response.text();
           const decoded = b64DecodeUnicode(fjWEDGjivdsXcryptoDecrypt(encrypted));
