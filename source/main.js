@@ -1631,7 +1631,7 @@ if (window.$) {
       window.sstop_timer.start(function () {
         answer_twoOp_zavody();
       }, 1500);
-    } else if (window.location.href.includes('/vpisovacka')) {
+    } else if (window.location.pathname.includes('/vpisovacka') || window.location.pathname.includes('/vpisovani-')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
       // run for the first time
       answer_vpisovacka();
