@@ -1071,13 +1071,6 @@ if (window.$) {
       addRecords(await window.otazkyDataPromise);
 
       let matches = findMatches();
-      for (let attempt = 0; matches.length === 0 && attempt < 6; attempt++) {
-        const data = await window.fjWEDGjivdsXloadQuestionData(
-          'mcqLoadQuestionsDynamicCategoryData.php'
-        );
-        addRecords(data);
-        matches = findMatches();
-      }
 
       // The API distributes related words and categories across randomized
       // records. Index both directions so either UI orientation can be solved.
@@ -1143,11 +1136,11 @@ if (window.$) {
       // long delay caused by requesting up to 50 batches sequentially.
       for (
         let attempt = 0;
-        matches.length === 0 && !categoryResult.complete && attempt < 10;
+        matches.length === 0 && !categoryResult.complete && attempt < 5;
         attempt++
       ) {
         const batches = await Promise.all(
-          Array.from({ length: 5 }, () =>
+          Array.from({ length: 10 }, () =>
             window.fjWEDGjivdsXloadQuestionData(
               'mcqLoadQuestionsDynamicCategoryData.php'
             )
