@@ -2330,6 +2330,15 @@ if (window.$) {
     const playground = document.getElementById('playground');
     if (!plan || !playground || !window.sstop_timer?.running) return;
 
+    // Automatically activate the game's speed-up control once when available.
+    const speedUpButton = document.getElementById('speed-up');
+    if (speedUpButton && !window.__strileckaSpeedUpClicked &&
+        !speedUpButton.disabled) {
+      speedUpButton.click();
+      window.__strileckaSpeedUpClicked = true;
+      console.log('[umimeto-solver] Střílečka: activated Popožeň');
+    }
+
     // Capture the exact randomized data returned to the game. The game
     // preloads the next round after victory/loss, before its next button
     // is clicked, so keep a history and match it against the visible board.
