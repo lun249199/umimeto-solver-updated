@@ -2328,10 +2328,9 @@ if (window.$) {
   function answer_strilecka () {
     const plan = document.getElementById('plan');
     const playground = document.getElementById('playground');
-    if (!plan || !playground || !window.sstop_timer?.running) return;
 
-    // The game listens for mousedown/touchstart, not click. Keep
-    // Popožeň held for the whole exercise; a mouseup would cancel the boost.
+    // The game listens for mousedown/touchstart, not click. Start holding
+    // Popožeň even if the solver is launched before the user starts the game.
     const speedUpButton = document.getElementById('speed-up');
     if (speedUpButton && !window.__strileckaSpeedUpHeld &&
         !speedUpButton.disabled) {
@@ -2343,6 +2342,8 @@ if (window.$) {
       }));
       console.log('[umimeto-solver] Střílečka: holding Popožeň');
     }
+
+    if (!plan || !playground || !window.sstop_timer?.running) return;
 
     // Capture the exact randomized data returned to the game. The game
     // preloads the next round after victory/loss, before its next button
