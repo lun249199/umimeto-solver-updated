@@ -1662,10 +1662,24 @@ if (window.$) {
       );
       if (!option || !option.isConnected || option.getClientRects().length === 0) return;
 
-      // Mark before clicking because the click can synchronously trigger game logic.
+      // Reserve this item while the game processes the click. If the game is
+      // still fading in / throttling and ignores it, release the reservation
+      // so the next polling cycle can retry.
       window.__robotLastAnsweredItem = item;
       console.log('[umimeto-solver] Roboti answer:', item.id, correctIndex);
       option.click();
+
+      setTimeout(() => {
+        if (window.__robotCurrentItem !== item ||
+            window.__robotLastAnsweredItem !== item) return;
+
+        const accepted = option.classList.contains('correct') ||
+          option.classList.contains('wrong');
+        if (!accepted) {
+          window.__robotLastAnsweredItem = null;
+          console.log('[umimeto-solver] Roboti: click was not accepted; will retry', item.id);
+        }
+      }, 600);
     } catch (error) {
       console.error('[umimeto-solver] Roboti:', error);
     }
