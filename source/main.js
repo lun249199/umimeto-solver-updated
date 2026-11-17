@@ -2329,20 +2329,6 @@ if (window.$) {
     const plan = document.getElementById('plan');
     const playground = document.getElementById('playground');
 
-    // The game listens for mousedown/touchstart, not click. Start holding
-    // Popožeň even if the solver is launched before the user starts the game.
-    const speedUpButton = document.getElementById('speed-up');
-    if (speedUpButton && !window.__strileckaSpeedUpHeld &&
-        !speedUpButton.disabled) {
-      window.__strileckaSpeedUpHeld = true;
-      speedUpButton.dispatchEvent(new MouseEvent('mousedown', {
-        bubbles: true,
-        cancelable: true,
-        view: window
-      }));
-      console.log('[umimeto-solver] Střílečka: holding Popožeň');
-    }
-
     if (!plan || !playground || !window.sstop_timer?.running) return;
 
     // Capture the exact randomized data returned to the game. The game
@@ -2398,6 +2384,20 @@ if (window.$) {
     }
 
     window.__strileckaTransitioning = false;
+
+    // Wait until the round is actually displayed before holding Popožeň.
+    // prepareLevel() can reset the boost if mousedown is dispatched too early.
+    const speedUpButton = document.getElementById('speed-up');
+    if (speedUpButton && !window.__strileckaSpeedUpHeld &&
+        !speedUpButton.disabled) {
+      window.__strileckaSpeedUpHeld = true;
+      speedUpButton.dispatchEvent(new MouseEvent('mousedown', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      }));
+      console.log('[umimeto-solver] Střílečka: holding Popožeň');
+    }
 
     const words = [...plan.querySelectorAll('.word[data-index]')];
     // Wait for at least two words to avoid accidentally matching an old
