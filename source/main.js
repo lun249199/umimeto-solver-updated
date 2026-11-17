@@ -785,11 +785,23 @@ if (window.$) {
       if (!window.doplnovackaDataPromise) {
         window.doplnovackaDataPromise = window.fjWEDGjivdsXloadQuestionData('doplnovackaLoadQuestionsBinaryChoiceData.php');
       }
-      const data = await window.doplnovackaDataPromise;
-      const items = data.items || [];
+      let data = await window.doplnovackaDataPromise;
+      let items = data.items || [];
       const pathParts = location.pathname.split('/').filter(Boolean);
       const pageId = pathParts[pathParts.length - 1] || '';
-      const byId = items.filter(item => String(item.id) === pageId);
+      let byId = items.filter(item => String(item.id) === pageId);
+
+      // The endpoint returns randomized batches. Refresh once for each
+      // question when the cached batch does not contain its page ID.
+      if (!byId.length && window.doplnovackaRefreshSignature !== signature) {
+        window.doplnovackaRefreshSignature = signature;
+        data = await window.fjWEDGjivdsXloadQuestionData(
+          'doplnovackaLoadQuestionsBinaryChoiceData.php'
+        );
+        window.doplnovackaDataPromise = Promise.resolve(data);
+        items = data.items || [];
+        byId = items.filter(item => String(item.id) === pageId);
+      }
       const optionsMatch = item => Array.isArray(item.options) &&
         item.options.length === actual.length &&
         item.options.every((option, index) => normalize(extractText(option.option)) === actual[index]);
