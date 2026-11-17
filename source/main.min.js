@@ -2138,7 +2138,7 @@ if (window.$) {
       const data = await window.__cteniDataPromise;
       const normalize = value => String(value ?? '')
         .normalize('NFKC')
-        .replace(/\\s+/g, ' ')
+        .replace(/\s+/g, ' ')
         .trim()
         .toLocaleLowerCase('cs');
 
@@ -2281,7 +2281,7 @@ if (window.$) {
       const usedWords = new Set();
 
       for (const box of boxes) {
-        const match = box.id.match(/^wordBox(\\d+)-(\\d+)$/);
+        const match = box.id.match(/^wordBox(\d+)-(\d+)$/);
         if (!match) continue;
         const row = Number(match[1]);
         const slot = Number(match[2]);
