@@ -2096,6 +2096,116 @@ if (window.$) {
     }
   }
 
+  async function answer_cteni_s_porozumenim () {
+    if (window.__cteniBusy) return;
+
+    const optionsContainer = document.getElementById('options');
+    const questionTitle = document.getElementById('question-title');
+    const storyTitle = document.getElementById('title');
+    const nextButton = document.getElementById('next-question');
+    if (!optionsContainer || !questionTitle || !storyTitle) return;
+
+    const isVisible = element => !!element &&
+      getComputedStyle(element).display !== 'none' &&
+      getComputedStyle(element).visibility !== 'hidden' &&
+      !element.disabled;
+
+    window.__cteniBusy = true;
+    try {
+      if (!window.__cteniDataPromise) {
+        if (typeof window.fjWEDGjivdsXloadQuestionData !== 'function') return;
+        window.__cteniDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('universalLoadItems.php');
+      }
+
+      const data = await window.__cteniDataPromise;
+      const normalize = value => String(value ?? '')
+        .normalize('NFKC')
+        .replace(/\\s+/g, ' ')
+        .trim()
+        .toLocaleLowerCase('cs');
+
+      const contentText = value => {
+        if (typeof value === 'string') return value;
+        if (!Array.isArray(value)) return '';
+        if (value.length >= 2 && typeof value[0] === 'string' &&
+            typeof value[1] === 'string' &&
+            ['text', 'para', 'cite', 'title'].includes(value[0])) {
+          return value[1];
+        }
+        return value.map(contentText).filter(Boolean).join(' ');
+      };
+
+      const storyName = normalize(storyTitle.textContent);
+      const story = (data?.items || []).find(item =>
+        normalize(item.name) === storyName
+      );
+      if (!story || !Array.isArray(story.item?.questions)) {
+        console.warn('[umimeto-solver] Čtení: story not found:', storyTitle.textContent);
+        return;
+      }
+
+      // If an explanation is being shown, continue through the site's own
+      // button so its internal question/progress state remains synchronized.
+      if (isVisible(nextButton)) {
+        const key = story.id + '|' + normalize(questionTitle.textContent);
+        if (window.__cteniNextKey !== key) {
+          window.__cteniNextKey = key;
+          console.log('[umimeto-solver] Čtení: next question');
+          nextButton.click();
+        }
+        return;
+      }
+
+      const questionText = normalize(questionTitle.textContent);
+      const question = story.item.questions.find(entry =>
+        normalize(contentText(entry.stem)) === questionText
+      );
+      if (!question || !Array.isArray(question.options)) {
+        console.warn('[umimeto-solver] Čtení: question not found:', {
+          story: story.name, question: questionTitle.textContent
+        });
+        return;
+      }
+
+      const correctIndex = Number(question.correct);
+      const correctText = normalize(contentText(question.options[correctIndex]));
+      const visibleOptions = [...optionsContainer.querySelectorAll('.option[data-index]')];
+      const correctOption = visibleOptions.find(option => {
+        const card = option.querySelector('.card') || option;
+        return normalize(card.innerText) === correctText;
+      });
+
+      if (!correctOption) {
+        console.warn('[umimeto-solver] Čtení: correct option not found:', {
+          story: story.name,
+          question: questionText,
+          correct: correctText,
+          visible: visibleOptions.map(option =>
+            normalize((option.querySelector('.card') || option).innerText))
+        });
+        return;
+      }
+
+      const answerKey = story.id + '|' + questionText;
+      if (window.__cteniAnsweredKey === answerKey) return;
+      window.__cteniAnsweredKey = answerKey;
+      window.__cteniNextKey = null;
+
+      console.log('[umimeto-solver] Čtení answer:', story.name,
+        '→', correctOption.querySelector('.card')?.innerText.trim() ||
+          correctOption.innerText.trim());
+      // Click the site's option element; its own handler records the answer
+      // and advances automatically or reveals the explanation/Next button.
+      correctOption.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Čtení:', error);
+      window.__cteniDataPromise = null;
+    } finally {
+      window.__cteniBusy = false;
+    }
+  }
+
   async function answer_carky () {
     if (window.__carkyBusy) return;
 
@@ -2384,6 +2494,13 @@ if (window.$) {
       // loop
       window.sstop_timer.start(function () {
         answer_presouvani();
+      }, 1500);
+    } else if (window.location.pathname.includes('/porozumeni-cteni') ||
+               window.location.pathname.includes('/porozumeni')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_cteni_s_porozumenim();
+      window.sstop_timer.start(function () {
+        answer_cteni_s_porozumenim();
       }, 1500);
     } else if (window.location.href.includes('/psani-carek') ||
                window.location.href.includes('/carky') ||
