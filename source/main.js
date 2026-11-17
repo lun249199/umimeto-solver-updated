@@ -1934,14 +1934,34 @@ if (window.$) {
   }
 
   function answer_presouvani () {
-    const correct_answer = -1;
     try {
-      solution();
-      document.getElementById('evaluate').click();
-      setTimeout(function () {
-        nextQuestion();
-      }, 200);
-    } catch (error) {}
+      const solutionButton = document.getElementById('solution');
+      const evaluateButton = document.getElementById('evaluate');
+      const nextButton = document.getElementById('next');
+      const isVisible = function (element) {
+        return !!element &&
+          getComputedStyle(element).display !== 'none' &&
+          getComputedStyle(element).visibility !== 'hidden' &&
+          !element.disabled;
+      };
+
+      // Advance after a successful evaluation.
+      if (isVisible(nextButton)) {
+        nextButton.click();
+        console.log('[umimeto-solver] Presouvani: next question');
+        return;
+      }
+
+      // The site's own solution button correctly places all cards,
+      // including on the first question where no shuffle mapping was captured.
+      if (isVisible(solutionButton) && isVisible(evaluateButton)) {
+        solutionButton.click();
+        evaluateButton.click();
+        console.log('[umimeto-solver] Presouvani: solution applied and evaluated');
+      }
+    } catch (error) {
+      console.error('[umimeto-solver] Presouvani:', error);
+    }
   }
 
   function answer_carky () {
