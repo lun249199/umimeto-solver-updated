@@ -1199,16 +1199,62 @@ if (window.$) {
     } catch (error) {}
   }
 
-  function answer_ukolovka () {
-    let correct_answer = '';
+  async function answer_ukolovka () {
+    if (window.ukolovkaBusy) return;
+
+    const pageId = window.location.pathname.split('/')[2];
+    const answerInput = document.querySelector('#answer0 input');
+    const evaluateButton = document.getElementById('evaluate');
+    const nextButton = document.getElementById('next');
+    if (!pageId || !answerInput || !evaluateButton || !nextButton) return;
+
+    // Use the exercise's own Next button after an answer has been evaluated.
+    if (getComputedStyle(nextButton).display !== 'none' && !nextButton.disabled) {
+      nextButton.click();
+      return;
+    }
+    if (getComputedStyle(evaluateButton).display === 'none' || evaluateButton.disabled) return;
+
+    window.ukolovkaBusy = true;
     try {
-      const answers = questions.find(q => q.id == window.location.pathname.split('/')[2]);
-      correct_answer = answers.item.question[answers.item.question.length - 1][1].answer[0];
-      console.log('Correct answer: ' + correct_answer);
-      document.getElementById('answer0').value = correct_answer;
-      document.getElementById('evaluate').click();
-      nextQuestion();
-    } catch (error) {}
+      if (!window.ukolovkaDataPromise) {
+        window.ukolovkaDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('universalLoadItems.php');
+      }
+
+      let data = await window.ukolovkaDataPromise;
+      let item = (data.items || []).find(entry => String(entry.id) === pageId);
+
+      // The endpoint may return a randomized subset; retry until this task appears.
+      for (let attempt = 0; !item && attempt < 10; attempt++) {
+        data = await window.fjWEDGjivdsXloadQuestionData('universalLoadItems.php');
+        window.ukolovkaDataPromise = Promise.resolve(data);
+        item = (data.items || []).find(entry => String(entry.id) === pageId);
+      }
+
+      const answerSegment = item?.item?.question?.find(
+        segment => Array.isArray(segment) && segment[0] === 'input'
+      );
+      const correctAnswer = answerSegment?.[1]?.answer?.[0];
+      if (typeof correctAnswer !== 'string' || !correctAnswer.length) {
+        console.warn('[umimeto-solver] Úkolovka: answer not found for task:', pageId, {
+          itemFound: Boolean(item),
+          item
+        });
+        return;
+      }
+
+      answerInput.value = correctAnswer;
+      answerInput.dispatchEvent(new Event('input', { bubbles: true }));
+      answerInput.dispatchEvent(new Event('change', { bubbles: true }));
+      console.log('[umimeto-solver] Úkolovka — correct answer:', correctAnswer);
+      evaluateButton.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Úkolovka:', error);
+      window.ukolovkaDataPromise = null;
+    } finally {
+      window.ukolovkaBusy = false;
+    }
   }
 
   function answer_pexeso () {
