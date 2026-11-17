@@ -2099,16 +2099,33 @@ if (window.$) {
   async function answer_cteni_s_porozumenim () {
     if (window.__cteniBusy) return;
 
+    const isVisible = element => !!element &&
+      getComputedStyle(element).display !== 'none' &&
+      getComputedStyle(element).visibility !== 'hidden' &&
+      !element.disabled &&
+      element.getClientRects().length > 0;
+
+    // A completed story uses a separate "Další text" button (sometimes
+    // rendered twice for responsive layouts). Handle it before looking for
+    // the question UI, which may already have been replaced by the final board.
+    const nextStoryButton = [...document.querySelectorAll('[data-data="next-item"]')]
+      .find(isVisible);
+    if (nextStoryButton) {
+      const storyKey = (document.getElementById('title')?.textContent || '') +
+        '|' + window.location.pathname;
+      if (window.__cteniNextStoryKey !== storyKey) {
+        window.__cteniNextStoryKey = storyKey;
+        console.log('[umimeto-solver] Čtení: next text');
+        nextStoryButton.click();
+      }
+      return;
+    }
+
     const optionsContainer = document.getElementById('options');
     const questionTitle = document.getElementById('question-title');
     const storyTitle = document.getElementById('title');
     const nextButton = document.getElementById('next-question');
     if (!optionsContainer || !questionTitle || !storyTitle) return;
-
-    const isVisible = element => !!element &&
-      getComputedStyle(element).display !== 'none' &&
-      getComputedStyle(element).visibility !== 'hidden' &&
-      !element.disabled;
 
     window.__cteniBusy = true;
     try {
