@@ -1864,38 +1864,73 @@ if (window.$) {
   }
 
   function answer_rozbory () {
-    const correct_answer = -1;
     try {
-      if (finished == '1') {
-        nextSentence();
-      } else {
-        // get the chunks of the sentence
-        unfiltered_chunks = Array.prototype.slice.call(document.getElementById('sentence').childNodes);
-        filtered_chunks = Array.prototype.slice.call(unfiltered_chunks);
-        filtered_chunks.splice(0, unfiltered_chunks.length);
-        for (i in range(document.getElementById('sentence').childNodes.length)) {
-          nodeName = Array.from(document.getElementById('sentence').childNodes)[i].nodeName;
-          if (nodeName === 'SPAN' || nodeName === 'DIV') {
-            filtered_chunks.push(unfiltered_chunks[i]);
-          }
+      const sentence = document.getElementById('sentence');
+      const markers = document.getElementById('markers');
+      const evaluateButton = document.getElementById('evaluate');
+      const characters = sentence
+        ? [...sentence.querySelectorAll('[id^="character"]')]
+            .sort((a, b) => Number(a.getAttribute('order')) - Number(b.getAttribute('order')))
+        : [];
+      const categories = typeof correctCategories !== 'undefined'
+        ? correctCategories
+        : window.correctCategories;
+
+      if (!sentence || !markers || !evaluateButton ||
+          !Array.isArray(categories) || characters.length !== categories.length) return;
+
+      const signature = characters.map((character, index) =>
+        character.textContent + ':' + categories[index]
+      ).join('|');
+
+      const isFinished = typeof finished !== 'undefined'
+        ? Number(finished) === 1
+        : Number(window.finished) === 1;
+
+      if (isFinished) {
+        if (window.__rozboryNextSignature !== signature) {
+          window.__rozboryNextSignature = signature;
+          console.log('[umimeto-solver] Rozbory: next sentence');
+          if (typeof nextSentence === 'function') nextSentence();
+          else if (typeof window.nextSentence === 'function') window.nextSentence();
         }
-
-        for (marker of document.getElementById('markers').childNodes) {
-          marker.click();
-
-          chunk_i = 0;
-          for (chunk of filtered_chunks) {
-            if (correctCategories[chunk_i] === marker.attributes.category.value) {
-              chunk.click();
-            }
-            chunk_i += 1;
-          }
-        }
-
-        // finished marking
-        document.getElementById('evaluate').click();
+        return;
       }
-    } catch (error) {}
+
+      if (window.__rozboryAnsweredSignature === signature) return;
+
+      const markerElements = [...markers.querySelectorAll('[category]')];
+      const uniqueCategories = [...new Set(categories)];
+
+      for (const category of uniqueCategories) {
+        const marker = markerElements.find(element =>
+          element.getAttribute('category') === category
+        );
+        if (!marker) {
+          console.warn('[umimeto-solver] Rozbory: marker not found:', category);
+          return;
+        }
+
+        const currentBucket = typeof bucketCategory !== 'undefined'
+          ? bucketCategory
+          : window.bucketCategory;
+        if (currentBucket !== category) {
+          window.markerClicked($(marker));
+        }
+
+        characters.forEach((character, index) => {
+          if (categories[index] === category) {
+            window.characterClicked($(character));
+          }
+        });
+      }
+
+      window.__rozboryAnsweredSignature = signature;
+      console.log('[umimeto-solver] Rozbory answer:', signature);
+      evaluateButton.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Rozbory:', error);
+    }
   }
 
   function answer_presouvani () {
