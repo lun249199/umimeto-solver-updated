@@ -2330,25 +2330,18 @@ if (window.$) {
     const playground = document.getElementById('playground');
     if (!plan || !playground || !window.sstop_timer?.running) return;
 
-    // The game listens for mousedown/touchstart, not click. Keep the
-    // speed-up held briefly, then release it with the matching document event.
+    // The game listens for mousedown/touchstart, not click. Keep
+    // Popožeň held for the whole exercise; a mouseup would cancel the boost.
     const speedUpButton = document.getElementById('speed-up');
-    if (speedUpButton && !window.__strileckaSpeedUpClicked &&
+    if (speedUpButton && !window.__strileckaSpeedUpHeld &&
         !speedUpButton.disabled) {
-      window.__strileckaSpeedUpClicked = true;
+      window.__strileckaSpeedUpHeld = true;
       speedUpButton.dispatchEvent(new MouseEvent('mousedown', {
         bubbles: true,
         cancelable: true,
         view: window
       }));
-      window.setTimeout(() => {
-        document.dispatchEvent(new MouseEvent('mouseup', {
-          bubbles: true,
-          cancelable: true,
-          view: window
-        }));
-        console.log('[umimeto-solver] Střílečka: used Popožeň');
-      }, 1500);
+      console.log('[umimeto-solver] Střílečka: holding Popožeň');
     }
 
     // Capture the exact randomized data returned to the game. The game
