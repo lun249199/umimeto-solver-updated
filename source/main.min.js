@@ -2068,6 +2068,34 @@ if (window.$) {
     }
   }
 
+  function answer_poslech_slov () {
+    try {
+      const currentWord = typeof pickedWord !== 'undefined' ? pickedWord : window.pickedWord;
+      const currentWords = typeof words !== 'undefined' ? words : window.words;
+      const currentGrid = typeof grid !== 'undefined' ? grid : window.grid;
+
+      if (!currentWord || !Array.isArray(currentWords) || !Array.isArray(currentGrid)) return;
+
+      const wordIndex = currentWords.findIndex(word =>
+        String(word?.id) === String(currentWord.id)
+      );
+      if (wordIndex < 0) return;
+
+      const cardIndex = currentGrid.indexOf(wordIndex);
+      if (cardIndex < 0) return;
+
+      const card = document.getElementById('grid' + cardIndex);
+      if (!card || card.getAttribute('clickable') !== '1') return;
+
+      // Use the site's own click handler for scoring, logging and progression.
+      console.log('[umimeto-solver] Poslech slovíček answer:',
+        currentWord.wordForeign || currentWord.word, '→ card', cardIndex);
+      $(card).trigger('click');
+    } catch (error) {
+      console.error('[umimeto-solver] Poslech slovíček:', error);
+    }
+  }
+
   async function answer_carky () {
     if (window.__carkyBusy) return;
 
@@ -2275,6 +2303,12 @@ if (window.$) {
       // loop
       window.sstop_timer.start(function () {
         answer_ukolovka();
+      }, 1500);
+    } else if (window.location.pathname.includes('/poslech-slov')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_poslech_slov();
+      window.sstop_timer.start(function () {
+        answer_poslech_slov();
       }, 1500);
     } else if (window.location.href.includes('/pexeso')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
