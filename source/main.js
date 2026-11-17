@@ -905,6 +905,26 @@ if (window.$) {
     } catch (error) {}
   }
 
+  function answer_doplnovani_slov () {
+    try {
+      const gaps = [...document.querySelectorAll('.gap[answered="0"]')];
+      for (const gap of gaps) {
+        const correctVariant = gap.querySelector('.inlineVariant[correct="1"]');
+        if (!correctVariant) continue;
+
+        gap.setAttribute('answered', '1');
+        if (typeof clickVariant === 'function' && typeof $ === 'function') {
+          clickVariant($(correctVariant));
+        } else {
+          correctVariant.click();
+        }
+        console.log('[umimeto-solver] Correct answer:', correctVariant.innerText.trim());
+      }
+    } catch (error) {
+      console.error('[umimeto-solver] Doplňování textu:', error);
+    }
+  }
+
   function answer_diktat () {
     const correct_answer = '';
     let el = '';
@@ -1507,7 +1527,13 @@ if (window.$) {
           console.warn('[umimeto-solver] Legacy question loader unavailable:', e);
         });
     }
-    if (ulr_ex_type.includes('doplnovacka') || ulr_ex_type.includes('rozhodovacka') || ulr_ex_type.includes('doplnovani-slov')) {
+    if (ulr_ex_type.includes('doplnovani-slov')) {
+      console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_doplnovani_slov();
+      window.sstop_timer.start(function () {
+        answer_doplnovani_slov();
+      }, 1500);
+    } else if (ulr_ex_type.includes('doplnovacka') || ulr_ex_type.includes('rozhodovacka')) {
       console.log('\n\nSource code: https://github.com/MP3Martin/umimeto-solver');
       // run for the first time
       answer_doplnovacka();
