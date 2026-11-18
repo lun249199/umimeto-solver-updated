@@ -1642,7 +1642,7 @@ if (window.$) {
       // Put each word into an empty slot with the matching category.
       for (const word of words) {
         const wordText = word.innerText.trim();
-        const category = answers[wordText];
+        const category = answerMap[wordText];
 
         if (!category) {
           console.warn('[umimeto-solver] No answer found:', wordText);
