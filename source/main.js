@@ -2359,8 +2359,33 @@ if (window.$) {
       window.__tetrisFetchHooked = true;
     }
 
+    const isVisible = element => !!element &&
+      getComputedStyle(element).display !== 'none' &&
+      getComputedStyle(element).visibility !== 'hidden' &&
+      element.getClientRects().length > 0;
+
+    // When a round ends, the game shows its own Retry/Next level button.
+    // Click it once, then wait for the next falling piece before resuming.
+    const levelButton = [...document.querySelectorAll(
+      '#exercise [data-data="load-level"]'
+    )].find(element =>
+      isVisible(element) &&
+      ['Další level', 'Opakovat level'].includes(element.textContent.trim())
+    );
+
+    if (levelButton) {
+      if (!window.__tetrisTransitioning) {
+        window.__tetrisTransitioning = true;
+        console.log('[umimeto-solver] Tetris: advancing',
+          levelButton.textContent.trim());
+        levelButton.click();
+      }
+      return;
+    }
+
     const node = termsContainer.querySelector('.term.falling');
     if (!node) return;
+    window.__tetrisTransitioning = false;
 
     const history = window.__tetrisDataHistory || [];
     const entry = history[history.length - 1];
