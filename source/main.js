@@ -2325,6 +2325,94 @@ if (window.$) {
     }
   }
 
+  function answer_tetris () {
+    const termsContainer = document.getElementById('terms');
+    const categoriesContainer = document.getElementById('categories');
+    if (!termsContainer || !categoriesContainer) return;
+
+    // The first Tetris question-data request happens before this solver runs.
+    // Capture subsequent rounds before the game consumes their terms with shift().
+    if (!window.__tetrisFetchHooked &&
+        typeof window.fjWEDGjivdsXloadQuestionData === 'function') {
+      window.__tetrisOriginalLoader =
+        window.fjWEDGjivdsXloadQuestionData;
+      window.__tetrisDataHistory = [];
+
+      window.fjWEDGjivdsXloadQuestionData = async function (endpoint, ...args) {
+        const data = await window.__tetrisOriginalLoader.call(this, endpoint, ...args);
+
+        if (endpoint === 'loadTetrisCategoryData.php' &&
+            Array.isArray(data?.categories)) {
+          window.__tetrisDataHistory.push({
+            time: Date.now(),
+            categories: structuredClone(data.categories)
+          });
+          // Keep only a few recent rounds.
+          window.__tetrisDataHistory =
+            window.__tetrisDataHistory.slice(-5);
+          console.log('[umimeto-solver] Tetris: captured round data',
+            data.categories.map(category => category.terms.length));
+        }
+
+        return data;
+      };
+      window.__tetrisFetchHooked = true;
+    }
+
+    const node = termsContainer.querySelector('.term.falling');
+    if (!node) return;
+
+    const history = window.__tetrisDataHistory || [];
+    const entry = history[history.length - 1];
+
+    // The initial round was loaded before the solver could install its hook.
+    // Do not guess its answers; wait for the next round's captured data.
+    if (!entry) {
+      if (!window.__tetrisFirstRoundNotice) {
+        window.__tetrisFirstRoundNotice = true;
+        console.warn('[umimeto-solver] Tetris: first round data was loaded before the solver. Restart or finish this round; automatic solving starts with the next round.');
+      }
+      return;
+    }
+
+    document.getElementById('sstop-tetris-first-round-warning')?.remove();
+
+    if (node === window.__tetrisLastNode) return;
+
+    const word = node.querySelector('.content')?.textContent.trim();
+    if (!word) return;
+
+    const categories = entry.categories;
+    const target = categories.findIndex(category =>
+      category.terms.some(term => term.term?.[1] === word)
+    );
+
+    if (target < 0) {
+      window.__tetrisLastNode = node;
+      console.warn('[umimeto-solver] Tetris: word not found in latest round data:', word);
+      return;
+    }
+
+    const current = Math.round(
+      parseFloat(node.style.left) / (100 / categories.length)
+    );
+    const leftButton = document.getElementById('arrow-left');
+    const rightButton = document.getElementById('arrow-right');
+    const downButton = document.getElementById('arrow-down');
+
+    if (!leftButton || !rightButton || !downButton) return;
+
+    window.__tetrisLastNode = node;
+
+    const button = target < current ? leftButton : rightButton;
+    for (let step = 0; step < Math.abs(target - current); step++) {
+      button.click();
+    }
+
+    downButton.click();
+    console.log('[umimeto-solver] Tetris: placed', word, '→ column', target);
+  }
+
   function answer_strilecka () {
     const plan = document.getElementById('plan');
     const playground = document.getElementById('playground');
@@ -2743,6 +2831,12 @@ if (window.$) {
       window.sstop_timer.start(function () {
         answer_vpisovacka();
       }, 1500);
+    } else if (window.location.pathname.includes('/tetris')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_tetris();
+      window.sstop_timer.start(function () {
+        answer_tetris();
+      }, 50);
     } else if (window.location.pathname.includes('/strilecka')) {
       console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
       if (window.__strileckaObserver) {
