@@ -1613,6 +1613,25 @@ if (window.$) {
     window.rozrazovackaBusy = true;
 
     try {
+      // Advance after a completed round. Remember the exact element so the
+      // polling loop cannot click the same button repeatedly during transition.
+      const nextButton = [...document.querySelectorAll('span.tlacitko.next')]
+        .find(el =>
+          el.innerText.trim() === 'Další' &&
+          (el.offsetWidth || el.offsetHeight || el.getClientRects().length)
+        );
+
+      if (nextButton) {
+        if (window.__rozrazovackaNextClicked !== nextButton) {
+          window.__rozrazovackaNextClicked = nextButton;
+          console.log('[umimeto-solver] Rozřazovačka: advancing to next round');
+          nextButton.click();
+        }
+        return;
+      }
+
+      window.__rozrazovackaNextClicked = null;
+
       const words = [...document.querySelectorAll('.word')];
       if (!words.length) return;
 
