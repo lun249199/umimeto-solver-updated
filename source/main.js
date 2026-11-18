@@ -2325,6 +2325,88 @@ if (window.$) {
     }
   }
 
+  async function answer_priserky () {
+    if (window.__priserkyBusy) return;
+
+    const wrapper = document.getElementById('question-wrapper');
+    const questionElement = wrapper?.querySelector('[data-data="question"]');
+    const cards = [...(wrapper?.querySelectorAll('[data-data="option"]') || [])];
+    if (!questionElement || cards.length !== 2) return;
+
+    // Completed questions have their gap filled with the correct letter.
+    // Only solve while the original blank is still present.
+    if (!questionElement.querySelector('.gap')) return;
+
+    const questionText = questionElement.innerText.trim();
+    const signature = JSON.stringify([
+      questionText,
+      cards.map(card => card.innerText.trim())
+    ]);
+    if (!questionText || signature === window.__priserkyLastSignature) return;
+
+    window.__priserkyBusy = true;
+    try {
+      if (!window.__priserkyDataPromise) {
+        if (typeof window.fjWEDGjivdsXloadQuestionData !== 'function') {
+          console.warn('[umimeto-solver] Příšerky: question loader unavailable');
+          return;
+        }
+        window.__priserkyDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('loadZombiciQuestions.php');
+      }
+
+      const data = await window.__priserkyDataPromise;
+      const extractText = value => {
+        if (Array.isArray(value)) {
+          if (value[0] === 'text' && typeof value[1] === 'string') return value[1];
+          return value.map(extractText).join('');
+        }
+        return typeof value === 'string' ? value : '';
+      };
+      const normalize = value => String(value ?? '')
+        .normalize('NFKC')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      const matches = (data?.questions || []).filter(question =>
+        normalize(extractText(question.question)) === normalize(questionText)
+      );
+      const visibleOptions = cards.map(card => normalize(card.innerText));
+      const question = matches.find(candidate =>
+        candidate.options?.length === 2 &&
+        candidate.options.every((option, index) =>
+          normalize(extractText(option.option)) === visibleOptions[index]
+        )
+      ) || matches[0];
+
+      if (!question) {
+        console.warn('[umimeto-solver] Příšerky: unanswered question not found:', questionText);
+        return;
+      }
+
+      const correctIndex = question.options.findIndex(option => Number(option.correct) === 1);
+      if (correctIndex < 0 || !cards[correctIndex]) {
+        console.warn('[umimeto-solver] Příšerky: correct option not found:', questionText);
+        return;
+      }
+
+      window.__priserkyLastSignature = signature;
+      console.log(
+        '[umimeto-solver] Příšerky:',
+        questionText,
+        '→',
+        visibleOptions[correctIndex],
+        '(' + correctIndex + ')'
+      );
+      cards[correctIndex].click();
+    } catch (error) {
+      console.error('[umimeto-solver] Příšerky:', error);
+      window.__priserkyDataPromise = null;
+    } finally {
+      window.__priserkyBusy = false;
+    }
+  }
+
   function answer_tetris () {
     const termsContainer = document.getElementById('terms');
     const categoriesContainer = document.getElementById('categories');
@@ -2870,6 +2952,12 @@ if (window.$) {
       window.sstop_timer.start(function () {
         answer_vpisovacka();
       }, 1500);
+    } else if (window.location.pathname.includes('/priserky')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_priserky();
+      window.sstop_timer.start(function () {
+        answer_priserky();
+      }, 100);
     } else if (window.location.pathname.includes('/tetris')) {
       console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
       answer_tetris();
