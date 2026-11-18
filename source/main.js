@@ -2366,11 +2366,25 @@ if (window.$) {
     const entry = history[history.length - 1];
 
     // The initial round was loaded before the solver could install its hook.
-    // Do not guess its answers; wait for the next round's captured data.
+    // Show a visible notice and instantly drop each piece to finish this
+    // unsolved round quickly. Automatic classification starts next round.
     if (!entry) {
-      if (!window.__tetrisFirstRoundNotice) {
-        window.__tetrisFirstRoundNotice = true;
-        console.warn('[umimeto-solver] Tetris: first round data was loaded before the solver. Restart or finish this round; automatic solving starts with the next round.');
+      let notice = document.getElementById('sstop-tetris-first-round-warning');
+      if (!notice) {
+        notice = document.createElement('div');
+        notice.id = 'sstop-tetris-first-round-warning';
+        notice.textContent = 'Upozornění: První kolo nelze automaticky vyřešit. Solver ho rychle dokončí a automatické odpovídání začne od dalšího kola.';
+        notice.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:2147483647;background:#fff3cd;color:#664d03;border:1px solid #ffecb5;border-radius:6px;padding:10px 16px;font:bold 14px/1.4 sans-serif;text-align:center;max-width:90vw;box-shadow:0 2px 8px rgba(0,0,0,.25);';
+        document.body.appendChild(notice);
+      }
+
+      if (node !== window.__tetrisFirstRoundLastNode) {
+        const downButton = document.getElementById('arrow-down');
+        if (downButton) {
+          window.__tetrisFirstRoundLastNode = node;
+          downButton.click();
+          console.log('[umimeto-solver] Tetris: fast-dropping first-round piece');
+        }
       }
       return;
     }
