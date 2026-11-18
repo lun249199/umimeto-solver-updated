@@ -1697,7 +1697,8 @@ if (window.$) {
 
       if (allPlaced) {
         console.log('[umimeto-solver] All words placed. Checking answers...');
-        window.sstop_timer.stop();
+        // Keep the solver polling so it can detect and click "Další"
+        // after the site's answer-checking transition completes.
         document.getElementById('evaluate')?.click();
       } else {
         console.warn('[umimeto-solver] Not all words could be placed; not submitting.');
