@@ -2878,6 +2878,93 @@ if (window.$) {
     }
   }
 
+  async function answer_oznacovani () {
+    if (window.__oznacovaniBusy) return;
+
+    const evaluateButton = document.getElementById('evaluate');
+    const nextButton = document.getElementById('next');
+    const questionContent = document.getElementById('question-content');
+    const pageId = window.location.pathname.split('/').filter(Boolean).pop();
+
+    if (!pageId || !evaluateButton || !questionContent) return;
+
+    window.__oznacovaniBusy = true;
+    try {
+      // The exercise updates the final URL segment to the current item's ID.
+      if (!window.__oznacovaniDataPromise) {
+        if (typeof window.fjWEDGjivdsXloadQuestionData !== 'function') {
+          console.warn('[umimeto-solver] Označování: question loader unavailable.');
+          return;
+        }
+        window.__oznacovaniDataPromise =
+          window.fjWEDGjivdsXloadQuestionData('universalLoadMedalPs.php');
+      }
+
+      const data = await window.__oznacovaniDataPromise;
+      const item = (data?.items || []).find(entry => String(entry.id) === pageId);
+      if (!item || item.type !== 'text' || item.areas !== 'commas') {
+        console.warn('[umimeto-solver] Označování: matching comma item not found:', pageId);
+        return;
+      }
+
+      // Advance after the previous answer has been evaluated.
+      if (nextButton && getComputedStyle(nextButton).display !== 'none' &&
+          getComputedStyle(nextButton).visibility !== 'hidden') {
+        if (window.__oznacovaniNextClickedFor !== pageId) {
+          window.__oznacovaniNextClickedFor = pageId;
+          console.log('[umimeto-solver] Označování: next question', pageId);
+          nextButton.click();
+        }
+        return;
+      }
+
+      if (window.__oznacovaniAnsweredId === pageId) return;
+
+      // Reproduce createTextPlugin().prepareCommas(): each comma-plus-space
+      // boundary receives one selectable-area index.
+      const correctIndices = new Set();
+      let index = 0;
+      const preparedContent = item.content
+        .replace(/\s+/g, ' ')
+        .replace(/ ?((<[^>]*> ?)+) /g, (match, html) => ` ${html.replace(/> </g, '><')}`)
+        .split(/((?:<[^>]*>)+)/g);
+
+      preparedContent.forEach(chunk => {
+        if (chunk.startsWith('<') && chunk.endsWith('>')) return;
+        chunk.replace(/,? /g, match => {
+          if (match.startsWith(',')) correctIndices.add(index);
+          index++;
+          return match;
+        });
+      });
+
+      const areas = [...questionContent.querySelectorAll('.selectable-area')]
+        .sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index));
+
+      if (areas.length !== index) {
+        console.warn('[umimeto-solver] Označování: area count mismatch', {
+          item: pageId, expected: index, actual: areas.length
+        });
+        return;
+      }
+
+      correctIndices.forEach(correctIndex => {
+        const area = areas.find(element => Number(element.dataset.index) === correctIndex);
+        if (area && !area.classList.contains('selected')) area.click();
+      });
+
+      window.__oznacovaniAnsweredId = pageId;
+      console.log('[umimeto-solver] Označování answer:', pageId,
+        [...correctIndices], '/', areas.length);
+      evaluateButton.click();
+    } catch (error) {
+      console.error('[umimeto-solver] Označování:', error);
+      window.__oznacovaniDataPromise = null;
+    } finally {
+      window.__oznacovaniBusy = false;
+    }
+  }
+
   function answer_zavody_v_psani () {
     const correct_answer = -1;
     try {
@@ -3120,6 +3207,12 @@ if (window.$) {
       answer_cteni_s_porozumenim();
       window.sstop_timer.start(function () {
         answer_cteni_s_porozumenim();
+      }, 1500);
+    } else if (window.location.pathname.includes('/oznacovani')) {
+      console.log('\\n\\nSource code: https://github.com/MP3Martin/umimeto-solver');
+      answer_oznacovani();
+      window.sstop_timer.start(function () {
+        answer_oznacovani();
       }, 1500);
     } else if (window.location.href.includes('/psani-carek') ||
                window.location.href.includes('/carky') ||
