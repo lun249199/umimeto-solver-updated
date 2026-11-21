@@ -1365,7 +1365,7 @@ if (window.$) {
 
     const titleElement = document.getElementById('question-title');
     const optionElements = [...document.querySelectorAll('#options > .option')];
-    if (!titleElement || optionElements.length !== 4) return;
+    if (!titleElement || optionElements.length < 2) return;
 
     const normalize = value => String(value ?? '')
       .normalize('NFKC')
@@ -1593,7 +1593,7 @@ if (window.$) {
         const currentTitle = document.getElementById('question-title')?.innerText || '';
         const currentOptions = [...document.querySelectorAll('#options > .option .text')]
           .map(element => normalize(element.innerText || ''));
-        const currentSignature = currentOptions.length === 4
+        const currentSignature = currentOptions.length >= 2
           ? JSON.stringify([normalize(currentTitle), currentOptions.sort()])
           : '';
         if (currentSignature === signature && typeof nextQuestion === 'function') {
