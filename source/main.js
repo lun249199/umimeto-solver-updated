@@ -2015,7 +2015,9 @@ if (window.$) {
       if (window.__rozboryAnsweredSignature === signature) return;
 
       const markerElements = [...markers.querySelectorAll('[category]')];
-      const uniqueCategories = [...new Set(categories)];
+      // "nope" marks characters that do not belong to any selectable
+      // category in this sentence. Leave those characters unmarked.
+      const uniqueCategories = [...new Set(categories)].filter(category => category !== 'nope');
 
       for (const category of uniqueCategories) {
         const marker = markerElements.find(element =>
